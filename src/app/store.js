@@ -8,5 +8,5 @@ export default configureStore({
   middleware: getDefaultMiddleware({
     serializableCheck: false,
   }),
-  preloadedState: { circulations: [] }
+  preloadedState: { circulationsById: {}  }
 });

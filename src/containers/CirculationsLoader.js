@@ -1,25 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addCirculation } from '../app/actions'
+import { submitXmlFile } from '../app/actions'
 
 import Button from 'react-bootstrap/Button'
+import { Download } from 'react-bootstrap-icons';
 
 class CirculationsLoader extends React.Component {
 
-  xmlParser = new DOMParser();
- 
   onChangeFile(event) {
     event.stopPropagation();
     event.preventDefault();
     Array.from(event.target.files).forEach((file) => {
-      this.parseFile(file);
+      file.text().then((fileText) => {
+        this.props.dispatch(submitXmlFile(fileText));
+      });
     });
-  }
-
-  parseFile(file) {
-    file.text().then((fileText) => {
-      this.props.dispatch(addCirculation(fileText));
-    })
   }
 
   render() {
@@ -30,7 +25,7 @@ class CirculationsLoader extends React.Component {
           ref={(ref) => this.upload = ref}
           style={{ display: "none" }}
           onChange={this.onChangeFile.bind(this)} multiple />
-      Charger
+        <Download />
       </Button >
     );
   }

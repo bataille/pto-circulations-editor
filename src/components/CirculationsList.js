@@ -2,28 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 import Table from 'react-bootstrap/Table';
-import Circulation from './Circulation';
+import CirculationRow from '../containers/CirculationRow';
 
 const CirculationsList = ({ circulations }) => (
-    <Table>
+    <Table hover>
         <thead>
             <tr>
+                <th></th>
                 <th>Num. Marche</th>
                 <th>Code TCT</th>
                 <th>Jour de départ</th>
                 <th>Heure de départ</th>
                 <th>Départ</th>
                 <th>Arrivée</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {circulations.map(circulation => (
-                <Circulation  key={circulation.id}
+                <CirculationRow  key={circulation.id}
+                id={circulation.id}
                 numMarche={circulation.numMarche}
                 codeTCT={circulation.codeTCT}
                 heureDepart={circulation.heureDepart}
                 depart={circulation.depart}
-                arrivee={circulation.arrivee} />
+                arrivee={circulation.arrivee}
+                selected={circulation.selected} />
             ))}
         </tbody>
     </Table >

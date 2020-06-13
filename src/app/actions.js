@@ -1,13 +1,15 @@
-let nextCirculationId = 0
-
-export const addCirculation = (circulationXml) => ({
-  type: 'ADD_CIRCULATION',
-  id: nextCirculationId++,
-  xml: circulationXml
+export const submitXmlFile = (xmlText) => ({
+  type: 'XML_FILE_SUBMITED',
+  xmlText: xmlText
 })
 
-export const changeCirculationXML = (id, circulationXml) => ({
-  type: 'CHANGE_CIRCULATION_XML',
+export const changeCirculation = (id, circulation) => ({
+  type: 'CIRCULATION_CHANGED',
   id: id,
-  xml: circulationXml
+  circulation: circulation
+})
+
+export const clickOnCirculationRow = (id) => ({
+  type: 'CIRCULATION_ROW_CLICKED_ON',
+  id: id
 })
