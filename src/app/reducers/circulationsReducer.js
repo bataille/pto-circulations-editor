@@ -47,14 +47,30 @@ const circulationsReducer = (state, action) => {
           return !circulation.selected;
         })
       })
-    case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
-      let duplicatedCirculations = changeSelectedCirculationsId(state);
+    case 'CIRCULATION_DUPLICATED':
       return ({
         ...state,
-        circulationsById: {
-          ...duplicatedCirculations,
-          ...state.circulationsById
-        }
+        circulationsById: Object.keys(state.circulationsById).reduce((result, id) => {
+          if (id === action.id) {
+            let newId = uuidv1();
+            return ({
+              ...result,
+              [id]: state.circulationsById[id],
+              [newId]: {
+                ...state.circulationsById[id],
+                id: newId,
+                selected: false
+              }
+            })
+          } else {
+            return ({ ...result, [id]: state.circulationsById[id] })
+          }
+        }, {})
+      })
+    case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
+      return ({
+        ...state,
+        circulationsById: duplicateSelectedCirculations(state)
       })
     default:
       return state
@@ -143,7 +159,7 @@ const filterObject = (object, filterFunction) => {
   return filtered;
 }
 
-const changeSelectedCirculationsId = (state) => {
+const duplicateSelectedCirculations = (state) => {
   return (Object.keys(state.circulationsById)
     .reduce((result, id) => {
       if (state.circulationsById[id].selected) {
@@ -158,7 +174,7 @@ const changeSelectedCirculationsId = (state) => {
           }
         })
       } else {
-        return ({...result, [id]: state.circulationsById[id]})
+        return ({ ...result, [id]: state.circulationsById[id] })
       }
     }, {}));
 }

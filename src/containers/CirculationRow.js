@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { clickOnCirculationRow } from '../app/actions'
 
-import PrGare from '../components/PrGare'
 import CirculationRowActions from '../containers/CirculationRowActions'
 
 class CirculationRow extends React.Component {

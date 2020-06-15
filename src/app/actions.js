@@ -23,6 +23,11 @@ export const deleteSelected = () => ({
   type: 'DELETE_SELECTED_BUTTON_PRESSED',
 })
 
+export const duplicateCirculation = (id) => ({
+  type: 'CIRCULATION_DUPLICATED',
+  id: id
+})
+
 export const duplicateSelected = () => ({
   type: 'DUPLICATE_SELECTED_BUTTON_PRESSED',
 })
