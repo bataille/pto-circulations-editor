@@ -15,7 +15,7 @@ const CirculationsListToolbar = () => (
             <CirculationsDuplicateButton />
             <CirculationsDeleteButton />
         </ButtonGroup>
-        <CirculationsSaveButton fineName="circulations.xml" className="ml-auto" />
+        <CirculationsSaveButton fileName="circulations.xml" className="ml-auto" />
     </Navbar>
 )
 
