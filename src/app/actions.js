@@ -13,3 +13,16 @@ export const clickOnCirculationRow = (id) => ({
   type: 'CIRCULATION_ROW_CLICKED_ON',
   id: id
 })
+
+export const deleteCirculation = (id) => ({
+  type: 'CIRCULATION_DELETED',
+  id: id
+})
+
+export const deleteSelected = () => ({
+  type: 'DELETE_SELECTED_BUTTON_PRESSED',
+})
+
+export const duplicateSelected = () => ({
+  type: 'DUPLICATE_SELECTED_BUTTON_PRESSED',
+})

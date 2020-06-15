@@ -1,13 +1,21 @@
 import React from 'react';
 
-import Navbar from 'react-bootstrap/Navbar';
-import CirculationsLoader from '../containers/CirculationsLoader'
-import CirculationsSaver from '../containers/CirculationsSaver'
+import Navbar from 'react-bootstrap/Navbar'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+
+import CirculationsLoadButton from '../containers/CirculationsLoadButton'
+import CirculationsSaveButton from '../containers/CirculationsSaveButton'
+import CirculationsDeleteButton from '../containers/CirculationsDeleteButton'
+import CirculationsDuplicateButton from '../containers/CirculationsDuplicateButton'
 
 const CirculationsListToolbar = () => (
     <Navbar bg="dark" sticky="top">
-        <CirculationsLoader />
-        <CirculationsSaver fineName="circulations.xml" />
+        <CirculationsLoadButton className="mr-2" />
+        <ButtonGroup>
+            <CirculationsDuplicateButton />
+            <CirculationsDeleteButton />
+        </ButtonGroup>
+        <CirculationsSaveButton fineName="circulations.xml" className="ml-auto" />
     </Navbar>
 )
 

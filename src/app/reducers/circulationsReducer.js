@@ -1,3 +1,5 @@
+import { v1 as uuidv1 } from 'uuid';
+
 const circulationsReducer = (state, action) => {
   switch (action.type) {
     case 'XML_FILE_SUBMITED':
@@ -21,14 +23,37 @@ const circulationsReducer = (state, action) => {
         }
       });
     case 'CIRCULATION_ROW_CLICKED_ON':
-      return({
+      if (state.circulationsById[action.id] != null) {
+        return ({
+          ...state,
+          circulationsById: {
+            ...state.circulationsById,
+            [action.id]: {
+              ...state.circulationsById[action.id],
+              selected: !state.circulationsById[action.id].selected
+            }
+          }
+        })
+      } else return state;
+    case 'CIRCULATION_DELETED':
+      return ({
+        ...state,
+        circulationsById: omit(action.id, state.circulationsById)
+      })
+    case 'DELETE_SELECTED_BUTTON_PRESSED':
+      return ({
+        ...state,
+        circulationsById: filterObject(state.circulationsById, (circulation) => {
+          return !circulation.selected;
+        })
+      })
+    case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
+      let duplicatedCirculations = changeSelectedCirculationsId(state);
+      return ({
         ...state,
         circulationsById: {
-          ...state.circulationsById,
-          [action.id]: {
-            ...state.circulationsById[action.id],
-            selected: !state.circulationsById[action.id].selected
-          }
+          ...duplicatedCirculations,
+          ...state.circulationsById
         }
       })
     default:
@@ -50,11 +75,11 @@ const xmlTextToCirculationsObject = (xmlText) => {
       circulation.childNodes.forEach((node) => {
         switch (node.tagName) {
           case "id":
-            currentId = node.innerHTML; 
-            result[currentId] = { 
+            currentId = node.innerHTML;
+            result[currentId] = {
               id: node.innerHTML,
               selected: false,
-              extended: false          
+              extended: false
             };
             break;
           case "dateCreation":
@@ -105,5 +130,38 @@ const xmlTextToCirculationsObject = (xmlText) => {
 
   return result;
 }
+
+const omit = (keyToOmit, { [keyToOmit]: _, ...omittedPropObj } = {}) => omittedPropObj;
+
+const filterObject = (object, filterFunction) => {
+  let filtered = {};
+  Object.keys(object).forEach((key) => {
+    if (filterFunction(object[key])) {
+      filtered[key] = object[key];
+    }
+  })
+  return filtered;
+}
+
+const changeSelectedCirculationsId = (state) => {
+  return (Object.keys(state.circulationsById)
+    .reduce((result, id) => {
+      if (state.circulationsById[id].selected) {
+        let newId = uuidv1();
+        return ({
+          ...result,
+          [id]: state.circulationsById[id],
+          [newId]: {
+            ...state.circulationsById[id],
+            id: newId,
+            selected: false
+          }
+        })
+      } else {
+        return ({...result, [id]: state.circulationsById[id]})
+      }
+    }, {}));
+}
+
 
 export default circulationsReducer

@@ -5,7 +5,7 @@ import { submitXmlFile } from '../app/actions'
 import Button from 'react-bootstrap/Button'
 import { Download } from 'react-bootstrap-icons';
 
-class CirculationsLoader extends React.Component {
+class CirculationsLoadButton extends React.Component {
 
   onChangeFile(event) {
     event.stopPropagation();
@@ -19,8 +19,9 @@ class CirculationsLoader extends React.Component {
 
   render() {
     return (
-      <Button variant="primary"
-        onClick={() => { this.upload.click() }}>
+      <Button variant="primary" className={this.props.className}
+        disabled={this.props.isLoading}
+        onClick={() => { if (!this.props.isLoading) { this.upload.click() }}}>
         <input type="file" id="circulationsFiles"
           ref={(ref) => this.upload = ref}
           style={{ display: "none" }}
@@ -32,4 +33,8 @@ class CirculationsLoader extends React.Component {
 
 }
 
-export default connect()(CirculationsLoader)
+const mapState = (state) => { 
+  return { isLoading: state.loadingInfo.isLoading }
+}
+
+export default connect(mapState)(CirculationsLoadButton)

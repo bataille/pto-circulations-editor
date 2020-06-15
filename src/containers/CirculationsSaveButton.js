@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import { Upload } from 'react-bootstrap-icons';
 
-class CirculationsSaver extends React.Component {
+class CirculationsSaveButton extends React.Component {
 
     getCirculationXmlText = (circulation) => {
         var circulationsText = "<Circulation>\n";
@@ -58,7 +58,7 @@ class CirculationsSaver extends React.Component {
 
     render() {
         return (
-            <Button variant="success"
+            <Button variant="success" className={this.props.className}
                 onClick={() => { this.saveAsXmlFile(this.props.fileName) }}>
                 <Upload />
             </Button >
@@ -74,4 +74,4 @@ const mapStateToProps = state => {
     })
 }
 
-export default connect(mapStateToProps)(CirculationsSaver)
+export default connect(mapStateToProps)(CirculationsSaveButton)
