@@ -31,3 +31,19 @@ export const duplicateCirculation = (id) => ({
 export const duplicateSelected = () => ({
   type: 'DUPLICATE_SELECTED_BUTTON_PRESSED',
 })
+
+export const numMarcheCellClicked = (id) => ({
+  type: 'NUM_MARCHE_CELL_CLICKED',
+  id: id
+})
+
+export const stopNumMarcheCellEdition = (id) => ({
+  type: 'STOP_NUM_MARCHE_CELL_EDITION',
+  id: id
+})
+
+export const changeNumMarche = (id, numMarche) => ({
+  type: 'CIRCULATION_NUM_MARCHE_CHANGED',
+  id: id,
+  numMarche: numMarche
+})

@@ -1,8 +1,8 @@
 const xmlParser = new DOMParser();
 const xmlSerializer = new XMLSerializer();
 
-export const xmlTextToCirculationsObject = (xmlText) => {
-  let result = {}
+export const xmlTextToCirculationsObject = (xmlText, defaultCirculationObject) => {
+  let result = { };
   let xmlDoc = xmlParser.parseFromString(xmlText, "application/xml");
   let circulations = xmlDoc.getElementsByTagName("Circulation");
 
@@ -14,9 +14,8 @@ export const xmlTextToCirculationsObject = (xmlText) => {
           case "id":
             currentId = node.innerHTML;
             result[currentId] = {
+              ...defaultCirculationObject,
               id: node.innerHTML,
-              selected: false,
-              extended: false
             };
             break;
           case "dateCreation":
@@ -71,6 +70,15 @@ export const xmlTextToCirculationsObject = (xmlText) => {
 export const getNumMarche = (circulation) => {
     let xmlDom = xmlParser.parseFromString(circulation.etatCirculation, "application/xml");
     return xmlDom.getElementsByTagName("numMarcheOrigine")[0].innerHTML;
+}
+
+export const withNumMarche = (circulation, numMarche) => {
+  let xmlDom = xmlParser.parseFromString(circulation.etatCirculation, "application/xml");
+  xmlDom.getElementsByTagName("numMarcheOrigine")[0].innerHTML = numMarche;
+  return ({
+    ...circulation,
+    etatCirculation: xmlSerializer.serializeToString(xmlDom) 
+  })
 }
 
 export const getCodeTCT = (circulation) => {

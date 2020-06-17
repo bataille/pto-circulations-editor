@@ -8,12 +8,12 @@ const CirculationsList = ({ circulationsIdList }) => (
     <Table hover>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Num. Marche</th>
-                <th>Code TCT</th>
-                <th>Jour de départ</th>
-                <th>Heure de départ</th>
-                <th></th>
+                <th className="col-sm-2">Id</th>
+                <th className="col-sm-1">Num. Marche</th>
+                <th className="col-sm-1">Code TCT</th>
+                <th className="col-sm-1">Jour de départ</th>
+                <th className="col-sm-1">Heure de départ</th>
+                <th className="col-sm-1"></th>
             </tr>
         </thead>
         <tbody>

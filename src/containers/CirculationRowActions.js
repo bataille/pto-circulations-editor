@@ -11,7 +11,7 @@ class CirculationRowAction extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={this.props.className}>
         <a href="#"
           onClick={(event) => {
             this.props.dispatch(duplicateCirculation(this.props.id));

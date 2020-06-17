@@ -1,10 +1,15 @@
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToCirculationsObject } from '../tools/CirculationXmlTools'
+import { xmlTextToCirculationsObject, withNumMarche } from '../tools/CirculationXmlTools'
+
+const defaultCirculationObject = {
+  selected: false,
+  extended: false,
+  numMarcheEdited: false,
 
 const circulationsReducer = (state, action) => {
   switch (action.type) {
     case 'XML_FILE_SUBMITED':
-      let circulationsToAdd = xmlTextToCirculationsObject(action.xmlText);
+      let circulationsToAdd = xmlTextToCirculationsObject(action.xmlText, defaultCirculationObject);
       return ({
         ...state,
         circulationsById: {
@@ -72,6 +77,39 @@ const circulationsReducer = (state, action) => {
       return ({
         ...state,
         circulationsById: duplicateSelectedCirculations(state)
+      })
+    case 'NUM_MARCHE_CELL_CLICKED':
+      return ({
+        ...state,
+        circulationsById: {
+          ...state.circulationsById,
+          [action.id]: {
+            ...state.circulationsById[action.id],
+            numMarcheEdited: true
+          }
+        }
+      })
+    case 'STOP_NUM_MARCHE_CELL_EDITION':
+      return ({
+        ...state,
+        circulationsById: {
+          ...state.circulationsById,
+          [action.id]: {
+            ...state.circulationsById[action.id],
+            numMarcheEdited: false
+          }
+        }
+      })
+    case 'CIRCULATION_NUM_MARCHE_CHANGED':
+      return ({
+        ...state,
+        circulationsById: {
+          ...state.circulationsById,
+          [action.id]: {
+            ...withNumMarche(state.circulationsById[action.id], action.numMarche),
+            numMarcheEdited: false
+          }
+        }
       })
     default:
       return state
