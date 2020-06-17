@@ -11,8 +11,7 @@ const CirculationsList = ({ circulationsIdList }) => (
                 <th className="col-sm-2">Id</th>
                 <th className="col-sm-1">Num. Marche</th>
                 <th className="col-sm-1">Code TCT</th>
-                <th className="col-sm-1">Jour de départ</th>
-                <th className="col-sm-1">Heure de départ</th>
+                <th className="col-sm-2">Date et heure de départ</th>
                 <th className="col-sm-1"></th>
             </tr>
         </thead>

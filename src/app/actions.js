@@ -47,3 +47,19 @@ export const changeNumMarche = (id, numMarche) => ({
   id: id,
   numMarche: numMarche
 })
+
+export const heureDepartCellClicked = (id) => ({
+  type: 'HEURE_DEPART_CELL_CLICKED',
+  id: id
+})
+
+export const stopHeureDepartCellEdition = (id) => ({
+  type: 'STOP_HEURE_DEPART_CELL_EDITION',
+  id: id
+})
+
+export const changeHeureDepart = (id, heureDepart) => ({
+  type: 'CIRCULATION_HEURE_DEPART_CHANGED',
+  id: id,
+  heureDepart: heureDepart
+})

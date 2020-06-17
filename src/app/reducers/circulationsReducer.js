@@ -1,10 +1,12 @@
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToCirculationsObject, withNumMarche } from '../tools/CirculationXmlTools'
+import { xmlTextToCirculationsObject, withNumMarche, withHeureDepart } from '../tools/CirculationXmlTools'
 
 const defaultCirculationObject = {
   selected: false,
   extended: false,
   numMarcheEdited: false,
+  heureDepartEdited: false
+}
 
 const circulationsReducer = (state, action) => {
   switch (action.type) {
@@ -108,6 +110,39 @@ const circulationsReducer = (state, action) => {
           [action.id]: {
             ...withNumMarche(state.circulationsById[action.id], action.numMarche),
             numMarcheEdited: false
+          }
+        }
+      })
+    case 'HEURE_DEPART_CELL_CLICKED':
+      return ({
+        ...state,
+        circulationsById: {
+          ...state.circulationsById,
+          [action.id]: {
+            ...state.circulationsById[action.id],
+            heureDepartEdited: true
+          }
+        }
+      })
+    case 'STOP_HEURE_DEPART_CELL_EDITION':
+      return ({
+        ...state,
+        circulationsById: {
+          ...state.circulationsById,
+          [action.id]: {
+            ...state.circulationsById[action.id],
+            heureDepartEdited: false
+          }
+        }
+      })
+    case 'CIRCULATION_HEURE_DEPART_CHANGED':
+      return ({
+        ...state,
+        circulationsById: {
+          ...state.circulationsById,
+          [action.id]: {
+            ...withHeureDepart(state.circulationsById[action.id], action.heureDepart),
+            heureDepartEdited: false
           }
         }
       })

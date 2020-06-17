@@ -91,6 +91,15 @@ export const getHeureDepart = (circulation) => {
     return xmlDom.getElementsByTagName("dateHeureOrigine")[0].innerHTML;
 }
 
+export const withHeureDepart = (circulation, heureDepart) => {
+    let xmlDom = xmlParser.parseFromString(circulation.etatCirculation, "application/xml");
+    xmlDom.getElementsByTagName("dateHeureOrigine")[0].innerHTML = heureDepart;
+    return ({
+      ...circulation,
+      etatCirculation: xmlSerializer.serializeToString(xmlDom) 
+    })
+}
+
 export const getDepart = (circulation) => {
     let xmlDom = xmlParser.parseFromString(circulation.mission, "application/xml");
     return xmlDom.getElementsByTagName("etapesMission")[0]
