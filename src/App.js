@@ -4,12 +4,12 @@ import './App.css';
 
 import Container from 'react-bootstrap/Container';
 import CirculationsListToolbar from './components/CirculationsListToolbar'
-import CirculationsListContainer from './containers/CirculationsListContainer';
+import CirculationsList from './containers/CirculationsList';
 
 const App = () => (
   <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
     <CirculationsListToolbar />
-    <CirculationsListContainer />
+    <CirculationsList />
   </Container>
 );
 

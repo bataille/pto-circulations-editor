@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { clickOnCirculationRow } from '../app/actions'
+import { getCodeTCT, getHeureDepart, getNumMarche} from '../app/tools/CirculationXmlTools'
 
 import CirculationRowActions from '../containers/CirculationRowActions'
 
@@ -21,4 +22,15 @@ class CirculationRow extends React.Component {
     }
 }
 
-export default connect()(CirculationRow);
+const mapStateToProps = (state, ownProps) => {
+    let circulation = state.circulationsById[ownProps.id];
+    return {
+        numMarche: getNumMarche(circulation),
+        codeTCT: getCodeTCT(circulation),
+        heureDepart: getHeureDepart(circulation),
+        selected: circulation.selected
+    }
+}
+
+
+export default connect(mapStateToProps)(CirculationRow);
