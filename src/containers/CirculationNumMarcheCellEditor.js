@@ -11,6 +11,19 @@ class CirculationNumMarcheCellEditor extends React.Component {
     constructor(props) {
         super(props);
         this.numMarcheEdit = props.numMarche;
+
+        // This binding is necessary to make `this` work in the callback    
+        this.handleValidate = this.handleValidate.bind(this);
+    }
+
+    handleValidate() {
+        if (this.props.numMarche !== this.numMarcheEdit) {
+            this.props.dispatch(
+                changeNumMarche(this.props.id, this.numMarcheEdit));
+        } else {
+            this.props.dispatch(
+                stopNumMarcheCellEdition(this.props.id));
+        }
     }
 
     render() {
@@ -20,17 +33,20 @@ class CirculationNumMarcheCellEditor extends React.Component {
                     defaultValue={this.props.numMarche}
                     aria-label="Numéro de marche"
                     onChange={(event) => { this.numMarcheEdit = event.target.value }}
+                    onClick={(event) => { event.stopPropagation() }}
+                    onKeyDown={(event) => { 
+                        if (event.key === "Escape") {
+                        this.props.dispatch(stopNumMarcheCellEdition(this.props.id));
+                    }}}
+                    onKeyPress={(event) => {
+                        if (event.key === "Enter") {
+                            this.handleValidate();
+                    }}}
                 />
                 <InputGroup.Append>
                     <Button variant="success"
                         onClick={(event) => {
-                            if (this.props.numMarche !== this.numMarcheEdit) {
-                                this.props.dispatch(
-                                    changeNumMarche(this.props.id, this.numMarcheEdit));
-                            } else {
-                                this.props.dispatch(
-                                    stopNumMarcheCellEdition(this.props.id));
-                            }
+                            this.handleValidate();
                             event.stopPropagation();
                         }}>
                         <Check />
