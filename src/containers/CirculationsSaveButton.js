@@ -30,13 +30,14 @@ class CirculationsSaveButton extends React.Component {
     }
 
     concatAllCirculationsAsText = (circulationsById) => {
-        var text = "<Circulations>\n";
+        var text =  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+        text += "<circulations>\n";
 
         Object.keys(circulationsById).forEach((id) => {
             text += this.getCirculationXmlText(circulationsById[id]);
         });
 
-        text += "</Circulations>";
+        text += "</circulations>";
         return text;
     }
 
