@@ -34,7 +34,7 @@ class CirculationsLoadButton extends React.Component {
 }
 
 const mapState = (state) => { 
-  return { isLoading: state.loadingInfo.isLoading }
+  return { isLoading: state.toolbar.loadingInfo.isLoading }
 }
 
 export default connect(mapState)(CirculationsLoadButton)
