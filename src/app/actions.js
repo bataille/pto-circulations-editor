@@ -3,6 +3,18 @@ export const submitXmlFile = (xmlText) => ({
   xmlText: xmlText
 })
 
+export const selectAll = () => ({
+  type: 'SELECT_ALL'
+})
+
+export const unselectAll = () => ({
+  type: 'UNSELECT_ALL'
+})
+
+export const flipSelectionAll = () => ({
+  type: 'FLIP_SELECT_ALL'
+})
+
 export const changeCirculation = (id, circulation) => ({
   type: 'CIRCULATION_CHANGED',
   id: id,

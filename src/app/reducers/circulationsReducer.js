@@ -19,6 +19,39 @@ const circulationsReducer = (state, action) => {
           ...circulationsToAdd
         }
       })
+    case 'SELECT_ALL':
+      return ({
+        ...state,
+        circulationsById: Object.keys(state.circulationsById).reduce((result,id) => {
+          result[id] = {
+            ...state.circulationsById[id],
+            selected: true
+          };
+          return result;
+        }, {})
+      })
+    case 'UNSELECT_ALL':
+      return ({
+        ...state,
+        circulationsById: Object.keys(state.circulationsById).reduce((result,id) => {
+          result[id] = {
+            ...state.circulationsById[id],
+            selected: false
+          };
+          return result;
+        }, {})
+      })
+    case 'FLIP_SELECT_ALL':
+      return ({
+        ...state,
+        circulationsById: Object.keys(state.circulationsById).reduce((result,id) => {
+          result[id] = {
+            ...state.circulationsById[id],
+            selected: !(state.circulationsById[id].selected)
+          };
+          return result;
+        }, {})
+      })
     case 'CIRCULATION_CHANGED':
       return ({
         ...state,
