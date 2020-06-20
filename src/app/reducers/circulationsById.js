@@ -129,6 +129,8 @@ const circulationsById = (state = {}, action) => {
           heureDepartEdited: false
         }
       })
+    case 'FAN_HEURE_DEPART_VALIDATED':
+      return fanHeureDepart(state, action.start, action.secondsIncrement);
     default:
       return state
   }
@@ -148,21 +150,43 @@ const filterObject = (object, filterFunction) => {
 
 const duplicateSelectedCirculations = (state) => {
   return Object.keys(state).reduce((result, id) => {
-      if (state[id].selected) {
-        let newId = uuidv1();
-        return ({
-          ...result,
-          [id]: state[id],
-          [newId]: {
-            ...state[id],
-            id: newId,
-            selected: false
-          }
-        })
-      } else {
-        return ({ ...result, [id]: state[id] })
-      }
-    }, {});
+    if (state[id].selected) {
+      let newId = uuidv1();
+      return ({
+        ...result,
+        [id]: state[id],
+        [newId]: {
+          ...state[id],
+          id: newId,
+          selected: false
+        }
+      })
+    } else {
+      return ({ ...result, [id]: state[id] })
+    }
+  }, {});
+}
+
+const fanHeureDepart = (state, start, secondsIncrement) => {
+  let { result } = Object.keys(state).reduce((acc, id) => {
+    if (state[id].selected) {
+      let newAcc = ({
+        ...acc,
+        result: {
+          ...acc.result,
+          [id]: withHeureDepart(state[id], acc.currentDate) 
+        }
+      });
+      newAcc.currentDate.setSeconds(acc.currentDate.getSeconds() + secondsIncrement);
+      return newAcc;
+    } else {
+      return ({ ...acc, result: { ...acc.result, [id]: state[id] } });
+    }
+  }, {
+    currentDate: new Date(start),
+    start, result: ({})
+  });
+  return result;
 }
 
 

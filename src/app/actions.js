@@ -75,3 +75,17 @@ export const changeHeureDepart = (id, heureDepart) => ({
   id: id,
   heureDepart: heureDepart
 })
+
+export const fanHeureDepartButtonClicked = () => ({
+  type: 'FAN_HEURE_DEPART_BUTTON_CLICKED',
+})
+
+export const fanHeureDepartClosed = () => ({
+  type: 'FAN_HEURE_DEPART_CLOSED'
+})
+
+export const fanHeureDepartValidated = (start, secondsIncrement) =>  ({
+  type: 'FAN_HEURE_DEPART_VALIDATED',
+  start: start,
+  secondsIncrement: secondsIncrement
+})
