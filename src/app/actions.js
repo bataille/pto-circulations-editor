@@ -89,3 +89,17 @@ export const fanHeureDepartValidated = (start, secondsIncrement) =>  ({
   start: start,
   secondsIncrement: secondsIncrement
 })
+
+export const fanNumMarcheButtonClicked = () => ({
+  type: 'FAN_NUM_MARCHE_BUTTON_CLICKED',
+})
+
+export const fanNumMarcheClosed = () => ({
+  type: 'FAN_NUM_MARCHE_CLOSED'
+})
+
+export const fanNumMarcheValidated = (start, increment) =>  ({
+  type: 'FAN_NUM_MARCHE_VALIDATED',
+  start: start,
+  increment: increment
+})

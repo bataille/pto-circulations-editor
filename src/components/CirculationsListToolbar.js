@@ -9,6 +9,7 @@ import CirculationsSaveButton from '../containers/CirculationsSaveButton'
 import CirculationsDeleteButton from '../containers/CirculationsDeleteButton'
 import CirculationsDuplicateButton from '../containers/CirculationsDuplicateButton'
 import CirculationsFanHeureDepartButton from '../containers/CirculationsFanHeureDepartButton'
+import CirculationsFanNumMarcheButton from '../containers/CirculationsFanNumMarcheButton'
 
 const CirculationsListToolbar = () => (
     <Navbar bg="dark" sticky="top">
@@ -18,8 +19,9 @@ const CirculationsListToolbar = () => (
             <CirculationsDuplicateButton />
             <CirculationsDeleteButton />
         </ButtonGroup>
+        <CirculationsFanNumMarcheButton />
         <CirculationsFanHeureDepartButton />
-        
+
         <CirculationsSaveButton fileName="circulations.xml" className="ml-auto" />
     </Navbar>
 )

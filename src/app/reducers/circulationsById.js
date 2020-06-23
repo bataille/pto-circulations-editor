@@ -131,6 +131,8 @@ const circulationsById = (state = {}, action) => {
       })
     case 'FAN_HEURE_DEPART_VALIDATED':
       return fanHeureDepart(state, action.start, action.secondsIncrement);
+    case 'FAN_NUM_MARCHE_VALIDATED':
+      return fanNumMarche(state, action.start, action.increment);  
     default:
       return state
   }
@@ -189,5 +191,25 @@ const fanHeureDepart = (state, start, secondsIncrement) => {
   return result;
 }
 
+const fanNumMarche = (state, start, increment) => {
+  let { result } = Object.keys(state).reduce((acc, id) => {
+    if (state[id].selected) {
+      return ({
+        ...acc,
+        currentId: acc.currentId + increment,
+        result: {
+          ...acc.result,
+          [id]: withNumMarche(state[id], acc.currentId)
+        }
+      })
+    } else {
+      return ({...acc, result: {...acc.result, [id]: state[id]}})
+    }
+  }, {
+    currentId: start, 
+    result: {}
+  });
+  return result;
+}
 
 export default circulationsById

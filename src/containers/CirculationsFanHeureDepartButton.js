@@ -17,7 +17,7 @@ class CirculationsFanHeureDepartButton extends React.Component {
         this.dateEdited = parsedDate.toISOString().slice(0, 10);
         this.timeEdited = parsedDate.toLocaleTimeString('fr-FR');
 
-        this.increment = 0;
+        this.increment = 600; // default: 10 minutes increment
 
         // These bindings are necessary to make `this` work in the callback    
         this.handleShow = this.handleShow.bind(this);
@@ -80,7 +80,6 @@ class CirculationsFanHeureDepartButton extends React.Component {
                                 defaultValue={"00:10:00"} 
                                 type="time" placeholder="Incrément"
                                 onChange={(event) => {
-                                    console.log(event.target.value);
                                     var secondsInc = 
                                         parseInt(event.target.value.slice(0,2) * 3600, 10);
                                     secondsInc += parseInt(event.target.value.slice(3,5) * 60, 10);

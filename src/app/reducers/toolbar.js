@@ -9,6 +9,9 @@ let defaultState = {
     },
     fanHeureDepartModal: {
         shown: false,
+    },
+    fanNumMarcheModal: {
+        shown: false,
     }
 }
 
@@ -30,6 +33,22 @@ const toolbar = (state = defaultState, action) => {
                     shown: false
                 }
             })
+            case 'FAN_NUM_MARCHE_BUTTON_CLICKED':
+                return ({
+                    ...state,
+                    fanNumMarcheModal: {
+                        ...state.fanNumMarcheModal,
+                        shown: true
+                    }
+                })
+            case 'FAN_NUM_MARCHE_VALIDATED':
+            case 'FAN_NUM_MARCHE_CLOSED':
+                return ({
+                    ...state,
+                    fanNumMarcheModal: {
+                        shown: false
+                    }
+                })
         default:
             return state
     }
