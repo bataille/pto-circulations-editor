@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { fanNumMarcheButtonClicked, fanNumMarcheClosed, fanNumMarcheValidated } from '../app/actions'
 
+import DropdownItem from 'react-bootstrap/DropdownItem'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import FormControl from 'react-bootstrap/FormControl'
@@ -21,27 +22,30 @@ class CirculationsFanNumMarcheButton extends React.Component {
         this.handleValidate = this.handleValidate.bind(this);
     }
 
-    handleShow() {
+    handleShow(event) {
         this.props.dispatch(fanNumMarcheButtonClicked());
+        event.stopPropagation();
     }
 
-    handleClose() {
+    handleClose(event) {
         this.props.dispatch(fanNumMarcheClosed());
+        if (event) {
+            event.stopPropagation();
+        }
     }
 
-    handleValidate() {
+    handleValidate(event) {
         this.props.dispatch(
             fanNumMarcheValidated(this.numMarcheEdited, this.increment));
+        event.stopPropagation();
     }
 
     render() {
         return (
-            <>
-                <Button variant="light" onClick={this.handleShow}>
-                    <ListNested />
-                </Button>
-
-                <Modal show={this.props.shown} onHide={this.handleClose}>
+            <DropdownItem onClick={this.handleShow}>
+                Numéro de marche
+                <Modal show={this.props.shown} onHide={this.handleClose} 
+                onClick={(event) => { event.stopPropagation(); }}>
                     <Modal.Header closeButton>
                         <Modal.Title>Ventilatation des numéros de marche</Modal.Title>
                     </Modal.Header>
@@ -62,8 +66,8 @@ class CirculationsFanNumMarcheButton extends React.Component {
                             <Form.Control
                                 defaultValue="1"
                                 type="number" placeholder="Incrément"
-                                onChange={(event) => { 
-                                    this.increment = parseInt(event.target.value, 10); 
+                                onChange={(event) => {
+                                    this.increment = parseInt(event.target.value, 10);
                                 }
                                 } />
                         </Form.Group>
@@ -77,7 +81,7 @@ class CirculationsFanNumMarcheButton extends React.Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-            </>
+            </DropdownItem>
         );
     }
 

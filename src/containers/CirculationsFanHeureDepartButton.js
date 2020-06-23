@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { fanHeureDepartButtonClicked, fanHeureDepartClosed, fanHeureDepartValidated } from '../app/actions'
 
+import DropdownItem from 'react-bootstrap/DropdownItem'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import { ListNested } from 'react-bootstrap-icons';
 
 class CirculationsFanHeureDepartButton extends React.Component {
     constructor(props) {
@@ -25,29 +25,32 @@ class CirculationsFanHeureDepartButton extends React.Component {
         this.handleValidate = this.handleValidate.bind(this);
     }
 
-    handleShow() {
+    handleShow(event) {
         this.props.dispatch(fanHeureDepartButtonClicked());
+        event.stopPropagation();
     }
 
-    handleClose() {
+    handleClose(event) {
         this.props.dispatch(fanHeureDepartClosed());
+        if (event) {
+            event.stopPropagation();
+        }
     }
 
-    handleValidate() {
+    handleValidate(event) {
         let newHeureDepart = new Date(
             this.dateEdited + " " + this.timeEdited);
         this.props.dispatch(
             fanHeureDepartValidated(newHeureDepart.toISOString(), this.increment));
+        event.stopPropagation();
     }
 
     render() {
         return (
-            <>
-                <Button variant="light" onClick={this.handleShow}>
-                    <ListNested />
-                </Button>
-
-                <Modal show={this.props.shown} onHide={this.handleClose}>
+            <DropdownItem variant="light" onClick={this.handleShow}>
+                Heure départ
+                <Modal show={this.props.shown} onHide={this.handleClose}
+                    onClick={(event) => { event.stopPropagation(); }}>
                     <Modal.Header closeButton>
                         <Modal.Title>Ventilatation des heures de départ</Modal.Title>
                     </Modal.Header>
@@ -77,13 +80,13 @@ class CirculationsFanHeureDepartButton extends React.Component {
                         <Form.Group>
                             <Form.Label>Incrément</Form.Label>
                             <Form.Control
-                                defaultValue={"00:10:00"} 
+                                defaultValue={"00:10:00"}
                                 type="time" placeholder="Incrément"
                                 onChange={(event) => {
-                                    var secondsInc = 
-                                        parseInt(event.target.value.slice(0,2) * 3600, 10);
-                                    secondsInc += parseInt(event.target.value.slice(3,5) * 60, 10);
-                                    secondsInc += parseInt(event.target.value.slice(6,8), 10);
+                                    var secondsInc =
+                                        parseInt(event.target.value.slice(0, 2) * 3600, 10);
+                                    secondsInc += parseInt(event.target.value.slice(3, 5) * 60, 10);
+                                    secondsInc += parseInt(event.target.value.slice(6, 8), 10);
                                     this.increment = secondsInc;
                                 }} />
                         </Form.Group>
@@ -97,7 +100,7 @@ class CirculationsFanHeureDepartButton extends React.Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-            </>
+            </DropdownItem>
         );
     }
 
