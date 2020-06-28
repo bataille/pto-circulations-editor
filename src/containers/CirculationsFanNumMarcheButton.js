@@ -7,7 +7,6 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
-import { ListNested } from 'react-bootstrap-icons';
 
 class CirculationsFanNumMarcheButton extends React.Component {
     constructor(props) {
