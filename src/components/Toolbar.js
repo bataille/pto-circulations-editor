@@ -12,7 +12,7 @@ import DeleteButton from '../containers/toolbar/DeleteButton'
 import DuplicateButton from '../containers/toolbar/DuplicateButton'
 import FanHeureDepartButton from '../containers/toolbar/FanHeureDepartButton'
 import FanNumMarcheButton from '../containers/toolbar/FanNumMarcheButton'
-
+import ShiftDateButton from '../containers/toolbar/ShiftDateButton'
 
 const Toolbar = () => (
     <Navbar bg="dark" sticky="top">
@@ -23,9 +23,11 @@ const Toolbar = () => (
             <DeleteButton />
         </ButtonGroup>
 
+        <ShiftDateButton className="mr-2" />
+
         <DropdownButton variant="light" title={<ListNested />}>
-        <FanNumMarcheButton />
-        <FanHeureDepartButton />
+            <FanNumMarcheButton />
+            <FanHeureDepartButton />
         </DropdownButton>
 
         <SaveButton fileName="circulations.xml" className="ml-auto" />

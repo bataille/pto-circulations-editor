@@ -120,3 +120,17 @@ export const fanNumMarcheValidated = (start, increment) =>  ({
   start: start,
   increment: increment
 })
+
+export const shiftDateButtonClicked = () => ({
+  type: 'SHIFT_DATE_BUTTON_CLICKED',
+})
+
+export const shiftDateClosed = () => ({
+  type: 'SHIFT_DATE_CLOSED'
+})
+
+export const shiftDateValidated = (start, goal) =>  ({
+  type: 'SHIFT_DATE_VALIDATED',
+  start: start,
+  goal: goal
+})

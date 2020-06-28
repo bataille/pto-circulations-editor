@@ -29,6 +29,11 @@ const toolbar = (state = defaultState, action) => {
         case 'FAN_NUM_MARCHE_VALIDATED':
         case 'FAN_NUM_MARCHE_CLOSED':
             return produce(state, draftState => { draftState.fanNumMarcheModal.shown = false; });
+        case 'SHIFT_DATE_BUTTON_CLICKED':
+            return produce(state, draftState => { draftState.shiftDateModal.shown = true; });
+        case 'SHIFT_DATE_VALIDATED':
+        case 'SHIFT_DATE_CLOSED':
+            return produce(state, draftState => { draftState.shiftDateModal.shown = false; });
         default:
             return state
     }

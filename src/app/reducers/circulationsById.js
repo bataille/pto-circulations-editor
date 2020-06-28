@@ -1,6 +1,6 @@
 import { produce } from 'immer'
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToCirculationsObject, withNumMarche, withHeureDepart, withCodeTCT } from '../tools/CirculationXmlTools'
+import { xmlTextToCirculationsObject, getHeureDepart, withNumMarche, withHeureDepart, withCodeTCT } from '../tools/CirculationXmlTools'
 
 const defaultCirculationObject = {
   selected: false,
@@ -99,6 +99,8 @@ const circulationsById = (state = {}, action) => {
       return fanHeureDepart(state, action.start, action.secondsIncrement);
     case 'FAN_NUM_MARCHE_VALIDATED':
       return fanNumMarche(state, action.start, action.increment);
+    case 'SHIFT_DATE_VALIDATED':
+      return shiftDate(state, action.start, action.goal);
     default:
       return state
   }
@@ -156,6 +158,19 @@ const fanNumMarche = (state, start, increment) => {
         currentId += increment;
       }
     })
+  });
+}
+
+const shiftDate = (state, start, goal) => {
+  const startDate = new Date(start);
+  const goalDate = new Date(goal);
+  const delta = goalDate - startDate;
+
+  return produce(state, draftState => {
+    Object.keys(draftState).forEach((id) => {
+      const origDate = new Date(getHeureDepart(draftState[id]));
+      draftState[id] = withHeureDepart(draftState[id], (new Date(origDate.getTime() + delta)));
+    });
   });
 }
 
