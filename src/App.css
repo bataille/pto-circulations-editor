@@ -25,3 +25,7 @@
 .w-40 {
   width: 40%;
 }
+
+.btn-xs {
+  font-size: 0.8em;
+}

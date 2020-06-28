@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { duplicateCirculation } from '../app/actions'
 import { deleteCirculation } from '../app/actions'
 
+import Button from 'react-bootstrap/Button'
 import { Files } from 'react-bootstrap-icons';
 import { Trash } from 'react-bootstrap-icons';
 
@@ -12,22 +13,24 @@ class CirculationRowAction extends React.Component {
   render() {
     return (
       <div className={this.props.className}>
-        <a href="#"
+        <Button
           onClick={(event) => {
             this.props.dispatch(duplicateCirculation(this.props.id));
             event.stopPropagation();
           }}
-          className="text-secondary mr-1" >
+          variant="outline-dark" size="sm"
+          className="mr-1 py-0 btn-xs" >
           <Files />
-        </a>
-        <a href="#"
+        </Button>
+        <Button
           onClick={(event) => {
             this.props.dispatch(deleteCirculation(this.props.id));
             event.stopPropagation();
           }}
-          className="text-secondary" >
+          variant="outline-dark" size="sm"
+          className="py-0 btn-xs" >
           <Trash />
-        </a>
+        </Button>
       </div>
     );
   }
