@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 import Table from 'react-bootstrap/Table';
-import CirculationRow from './CirculationRow';
+import CirculationRow from './circulationTableRow/CirculationRow';
 
-const CirculationsList = ({ circulationsIdList }) => (
+const CirculationsTable = ({ circulationsIdList }) => (
     <Table hover>
         <thead>
             <tr>
@@ -30,4 +30,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(CirculationsList);
+export default connect(mapStateToProps)(CirculationsTable);

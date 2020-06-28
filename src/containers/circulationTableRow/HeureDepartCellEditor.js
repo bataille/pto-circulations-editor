@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { changeHeureDepart, stopHeureDepartCellEdition } from '../app/actions'
+import { changeHeureDepart, stopHeureDepartCellEdition } from '../../app/actions'
 
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import { Check } from 'react-bootstrap-icons';
 
-class CirculationHeureDepartCellEditor extends React.Component {
+class HeureDepartCellEditor extends React.Component {
     constructor(props) {
         super(props);
         let parsedDate = new Date(props.heureDepart);
@@ -86,4 +86,4 @@ class CirculationHeureDepartCellEditor extends React.Component {
 
 }
 
-export default connect()(CirculationHeureDepartCellEditor)
+export default connect()(HeureDepartCellEditor)

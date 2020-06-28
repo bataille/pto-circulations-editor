@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { selectAll, unselectAll, flipSelectionAll } from '../app/actions'
+import { selectAll, unselectAll, flipSelectionAll } from '../../app/actions'
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
 import { ListCheck, ListTask, CircleHalf } from 'react-bootstrap-icons';
 
-class CirculationsSelectionButtonsGroup extends React.Component {
+class SelectionButtonsGroup extends React.Component {
 
   render() {
     return (
@@ -29,4 +29,4 @@ class CirculationsSelectionButtonsGroup extends React.Component {
 
 }
 
-export default connect()(CirculationsSelectionButtonsGroup)
+export default connect()(SelectionButtonsGroup)

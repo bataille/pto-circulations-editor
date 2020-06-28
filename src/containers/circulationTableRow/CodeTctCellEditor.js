@@ -1,48 +1,57 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { changeNumMarche, stopNumMarcheCellEdition } from '../app/actions'
+import { getCodesTctArray, getCodeTctId } from '../../app/tools/CodeTctTools'
+import { changeCodeTct, stopCodeTctCellEdition } from '../../app/actions'
 
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import { Check } from 'react-bootstrap-icons';
 
-class CirculationNumMarcheCellEditor extends React.Component {
+class CodeTctCellEditor extends React.Component {
     constructor(props) {
         super(props);
-        this.numMarcheEdit = props.numMarche;
+        this.codeTctEdit = props.codeTCT;
 
         // This binding is necessary to make `this` work in the callback    
         this.handleValidate = this.handleValidate.bind(this);
     }
 
     handleValidate() {
-        if (this.props.numMarche !== this.numMarcheEdit) {
+        if (this.props.codeTCT !== this.codeTctEdit) {
             this.props.dispatch(
-                changeNumMarche(this.props.id, this.numMarcheEdit));
+                changeCodeTct(
+                    this.props.id, 
+                    getCodeTctId(this.codeTctEdit), 
+                    this.codeTctEdit));
         } else {
             this.props.dispatch(
-                stopNumMarcheCellEdition(this.props.id));
+                stopCodeTctCellEdition(this.props.id));
         }
     }
 
     render() {
         return (
             <InputGroup className={this.props.className}>
-                <FormControl
-                    defaultValue={this.props.numMarche}
-                    aria-label="Numéro de marche"
-                    onChange={(event) => { this.numMarcheEdit = event.target.value }}
+                <FormControl as="select"
+                    defaultValue={this.props.codeTCT}
+                    aria-label="Code TCT"
+                    onChange={(event) => { this.codeTctEdit = event.target.value }}
                     onClick={(event) => { event.stopPropagation() }}
-                    onKeyDown={(event) => { 
+                    onKeyDown={(event) => {
                         if (event.key === "Escape") {
-                        this.props.dispatch(stopNumMarcheCellEdition(this.props.id));
-                    }}}
+                            this.props.dispatch(stopCodeTctCellEdition(this.props.id));
+                        }
+                    }}
                     onKeyPress={(event) => {
                         if (event.key === "Enter") {
                             this.handleValidate();
-                    }}}
-                />
+                        }
+                }}>
+                    {getCodesTctArray().map(codeTct => (
+                        <option>{codeTct}</option>
+                    ))}
+                </FormControl>
                 <InputGroup.Append>
                     <Button variant="success"
                         onClick={(event) => {
@@ -58,4 +67,4 @@ class CirculationNumMarcheCellEditor extends React.Component {
 
 }
 
-export default connect()(CirculationNumMarcheCellEditor)
+export default connect()(CodeTctCellEditor)

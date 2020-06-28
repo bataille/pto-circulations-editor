@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fanHeureDepartButtonClicked, fanHeureDepartClosed, fanHeureDepartValidated } from '../app/actions'
+import { fanHeureDepartButtonClicked, fanHeureDepartClosed, fanHeureDepartValidated } from '../../app/actions'
 
 import DropdownItem from 'react-bootstrap/DropdownItem'
 import Button from 'react-bootstrap/Button'
@@ -9,7 +9,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
-class CirculationsFanHeureDepartButton extends React.Component {
+class FanHeureDepartButton extends React.Component {
     constructor(props) {
         super(props);
 
@@ -112,4 +112,4 @@ const mapState = (state) => {
     });
 }
 
-export default connect(mapState)(CirculationsFanHeureDepartButton)
+export default connect(mapState)(FanHeureDepartButton)

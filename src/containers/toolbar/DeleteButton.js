@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteSelected } from '../app/actions'
+import { deleteSelected } from '../../app/actions'
 
 import Button from 'react-bootstrap/Button'
 import { Trash } from 'react-bootstrap-icons';
 
-class CirculationsDeleteButton extends React.Component {
+class DeleteButton extends React.Component {
 
   render() {
     return (
@@ -18,4 +18,4 @@ class CirculationsDeleteButton extends React.Component {
 
 }
 
-export default connect()(CirculationsDeleteButton)
+export default connect()(DeleteButton)

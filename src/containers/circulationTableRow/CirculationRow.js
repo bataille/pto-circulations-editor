@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { clickOnCirculationRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked } from '../app/actions'
-import { getCodeTCT, getHeureDepart, getNumMarche } from '../app/tools/CirculationXmlTools'
+import { clickOnCirculationRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked } from '../../app/actions'
+import { getCodeTCT, getHeureDepart, getNumMarche } from '../../app/tools/CirculationXmlTools'
 
-import CirculationRowActions from '../containers/CirculationRowActions'
-import CirculationNumMarcheCellEditor from './CirculationNumMarcheCellEditor'
-import CirculationHeureDepartCellEditor from './CirculationHeureDepartCellEditor'
-import CirculationCodeTctCellEditor from './CirculationCodeTctCellEditor'
+import CirculationRowActions from './CirculationRowActions'
+import NumMarcheCellEditor from './NumMarcheCellEditor'
+import HeureDepartCellEditor from './HeureDepartCellEditor'
+import CodeTctCellEditor from './CodeTctCellEditor'
 
 class CirculationRow extends React.Component {
     render() {
@@ -17,7 +17,7 @@ class CirculationRow extends React.Component {
                 <td>{this.props.id}</td>
                 <td>{
                     this.props.numMarcheEdited
-                        ? <CirculationNumMarcheCellEditor
+                        ? <NumMarcheCellEditor
                             id={this.props.id}
                             numMarche={this.props.numMarche} />
                         : <span onClick={(event) => {
@@ -29,7 +29,7 @@ class CirculationRow extends React.Component {
                 }</td>
                 <td>{
                     this.props.codeTctEdited
-                        ? <CirculationCodeTctCellEditor
+                        ? <CodeTctCellEditor
                             id={this.props.id}
                             codeTCT={this.props.codeTCT} />
                         : <span onClick={(event) => {
@@ -41,7 +41,7 @@ class CirculationRow extends React.Component {
                 }</td>
                 <td>{
                     this.props.heureDepartEdited
-                        ? <CirculationHeureDepartCellEditor
+                        ? <HeureDepartCellEditor
                             id={this.props.id}
                             heureDepart={this.props.heureDepart} />
                         : <span onClick={(event) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fanNumMarcheButtonClicked, fanNumMarcheClosed, fanNumMarcheValidated } from '../app/actions'
+import { fanNumMarcheButtonClicked, fanNumMarcheClosed, fanNumMarcheValidated } from '../../app/actions'
 
 import DropdownItem from 'react-bootstrap/DropdownItem'
 import Button from 'react-bootstrap/Button'
@@ -8,7 +8,7 @@ import Modal from 'react-bootstrap/Modal'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 
-class CirculationsFanNumMarcheButton extends React.Component {
+class FanNumMarcheButton extends React.Component {
     constructor(props) {
         super(props);
 
@@ -92,4 +92,4 @@ const mapState = (state) => {
     });
 }
 
-export default connect(mapState)(CirculationsFanNumMarcheButton)
+export default connect(mapState)(FanNumMarcheButton)

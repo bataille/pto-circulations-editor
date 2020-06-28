@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import { Upload } from 'react-bootstrap-icons';
 
-class CirculationsSaveButton extends React.Component {
+class SaveButton extends React.Component {
 
     getCirculationXmlText = (circulation) => {
         var circulationsText = "<Circulation>\n";
@@ -75,4 +75,4 @@ const mapStateToProps = state => {
     })
 }
 
-export default connect(mapStateToProps)(CirculationsSaveButton)
+export default connect(mapStateToProps)(SaveButton)

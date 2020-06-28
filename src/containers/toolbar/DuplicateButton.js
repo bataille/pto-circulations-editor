@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { duplicateSelected } from '../app/actions'
+import { duplicateSelected } from '../../app/actions'
 
 import Button from 'react-bootstrap/Button'
 import { Files } from 'react-bootstrap-icons';
 
-class CirculationsDuplicateButton extends React.Component {
+class DuplicateButton extends React.Component {
 
   render() {
     return (
@@ -18,4 +18,4 @@ class CirculationsDuplicateButton extends React.Component {
 
 }
 
-export default connect()(CirculationsDuplicateButton)
+export default connect()(DuplicateButton)

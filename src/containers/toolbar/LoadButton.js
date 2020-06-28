@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { submitXmlFile } from '../app/actions'
+import { submitXmlFile } from '../../app/actions'
 
 import Button from 'react-bootstrap/Button'
 import { Download } from 'react-bootstrap-icons';
 
-class CirculationsLoadButton extends React.Component {
+class LoadButton extends React.Component {
 
   onChangeFile(event) {
     event.stopPropagation();
@@ -37,4 +37,4 @@ const mapState = (state) => {
   return { isLoading: state.toolbar.loadingInfo.isLoading }
 }
 
-export default connect(mapState)(CirculationsLoadButton)
+export default connect(mapState)(LoadButton)

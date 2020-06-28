@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { duplicateCirculation } from '../app/actions'
-import { deleteCirculation } from '../app/actions'
+import { duplicateCirculation } from '../../app/actions'
+import { deleteCirculation } from '../../app/actions'
 
 import Button from 'react-bootstrap/Button'
 import { Files } from 'react-bootstrap-icons';
