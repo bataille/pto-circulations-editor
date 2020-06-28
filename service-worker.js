@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pto-circulations-editor/precache-manifest.0e6f3c5997dff9b672793619d12300c8.js"
+  "/pto-circulations-editor/precache-manifest.0e002349163386c08a2b18b9d0dc9878.js"
 );
 
 self.addEventListener('message', (event) => {

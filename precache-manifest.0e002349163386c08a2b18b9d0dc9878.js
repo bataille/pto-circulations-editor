@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e59f2049adc653b75441c8af49fc7416",
+    "revision": "1a86db7e20d49d1929d0b6f50d9ce98e",
     "url": "/pto-circulations-editor/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pto-circulations-editor/static/css/2.af3c1da9.chunk.css"
   },
   {
-    "revision": "03d63c7d0159e423fc01",
+    "revision": "83284f39b77005de49b2",
     "url": "/pto-circulations-editor/static/css/main.780a517e.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pto-circulations-editor/static/js/2.941458cc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "03d63c7d0159e423fc01",
-    "url": "/pto-circulations-editor/static/js/main.582a7644.chunk.js"
+    "revision": "83284f39b77005de49b2",
+    "url": "/pto-circulations-editor/static/js/main.dd0f716b.chunk.js"
   },
   {
     "revision": "2fe9270066692a97438a",
