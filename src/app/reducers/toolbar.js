@@ -1,3 +1,5 @@
+import { produce } from 'immer'
+
 let defaultState = {
     loadingInfo: {
         isLoading: false,
@@ -18,37 +20,15 @@ let defaultState = {
 const toolbar = (state = defaultState, action) => {
     switch (action.type) {
         case 'FAN_HEURE_DEPART_BUTTON_CLICKED':
-            return ({
-                ...state,
-                fanHeureDepartModal: {
-                    ...state.fanHeureDepartModal,
-                    shown: true
-                }
-            })
+            return produce(state, draftState => { draftState.fanHeureDepartModal.shown = true; });
         case 'FAN_HEURE_DEPART_VALIDATED':
         case 'FAN_HEURE_DEPART_CLOSED':
-            return ({
-                ...state,
-                fanHeureDepartModal: {
-                    shown: false
-                }
-            })
-            case 'FAN_NUM_MARCHE_BUTTON_CLICKED':
-                return ({
-                    ...state,
-                    fanNumMarcheModal: {
-                        ...state.fanNumMarcheModal,
-                        shown: true
-                    }
-                })
-            case 'FAN_NUM_MARCHE_VALIDATED':
-            case 'FAN_NUM_MARCHE_CLOSED':
-                return ({
-                    ...state,
-                    fanNumMarcheModal: {
-                        shown: false
-                    }
-                })
+            return produce(state, draftState => { draftState.fanHeureDepartModal.shown = false; });
+        case 'FAN_NUM_MARCHE_BUTTON_CLICKED':
+            return produce(state, draftState => { draftState.fanNumMarcheModal.shown = true; });
+        case 'FAN_NUM_MARCHE_VALIDATED':
+        case 'FAN_NUM_MARCHE_CLOSED':
+            return produce(state, draftState => { draftState.fanNumMarcheModal.shown = false; });
         default:
             return state
     }

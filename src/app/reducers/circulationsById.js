@@ -1,3 +1,4 @@
+import { produce } from 'immer'
 import { v1 as uuidv1 } from 'uuid';
 import { xmlTextToCirculationsObject, withNumMarche, withHeureDepart, withCodeTCT } from '../tools/CirculationXmlTools'
 
@@ -18,47 +19,32 @@ const circulationsById = (state = {}, action) => {
         ...circulationsToAdd
       });
     case 'SELECT_ALL':
-      return Object.keys(state).reduce((result, id) => {
-        result[id] = {
-          ...state[id],
-          selected: true
-        };
-        return result;
-      }, {});
+      return produce(state, draftState => {
+        Object.keys(draftState).forEach((id => { draftState[id].selected = true; }));
+      });
     case 'UNSELECT_ALL':
-      return Object.keys(state).reduce((result, id) => {
-        result[id] = {
-          ...state[id],
-          selected: false
-        };
-        return result;
-      }, {});
+      return produce(state, draftState => {
+        Object.keys(draftState).forEach((id => { draftState[id].selected = false; }));
+      });
     case 'FLIP_SELECT_ALL':
-      return Object.keys(state).reduce((result, id) => {
-        result[id] = {
-          ...state[id],
-          selected: !(state[id].selected)
-        };
-        return result;
-      }, {});
+      return produce(state, draftState => {
+        Object.keys(draftState).forEach((id => {
+          draftState[id].selected = !(draftState[id].selected);
+        }));
+      });
     case 'CIRCULATION_CHANGED':
-      return ({
-        ...state,
-        [action.id]: {
-          ...state[action.id],
+      return produce(state, draftState => {
+        draftState[action.id] = {
+          ...draftState[action.id],
           ...action.circulation
+        };
+      })
+    case 'CIRCULATION_ROW_CLICKED_ON':
+      return produce(state, draftState => {
+        if (draftState[action.id] != null) {
+          draftState[action.id].selected = !(draftState[action.id].selected);
         }
       });
-    case 'CIRCULATION_ROW_CLICKED_ON':
-      if (state[action.id] != null) {
-        return ({
-          ...state,
-          [action.id]: {
-            ...state[action.id],
-            selected: !state[action.id].selected
-          }
-        })
-      } else return state;
     case 'CIRCULATION_DELETED':
       return omit(action.id, state);
     case 'DELETE_SELECTED_BUTTON_PRESSED':
@@ -83,81 +69,36 @@ const circulationsById = (state = {}, action) => {
     case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
       return duplicateSelectedCirculations(state);
     case 'NUM_MARCHE_CELL_CLICKED':
-      return ({
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          numMarcheEdited: true
-        }
-      });
+      return produce(state, draftState => { draftState[action.id].numMarcheEdited = true; });
     case 'STOP_NUM_MARCHE_CELL_EDITION':
-      return ({
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          numMarcheEdited: false
-        }
-      });
+      return produce(state, draftState => { draftState[action.id].numMarcheEdited = false; });
     case 'CIRCULATION_NUM_MARCHE_CHANGED':
-      return ({
-        ...state,
-        [action.id]: {
-          ...withNumMarche(state[action.id], action.numMarche),
-          numMarcheEdited: false
-        }
+      return produce(state, draftState => {
+        draftState[action.id] = withNumMarche(draftState[action.id], action.numMarche);
+        draftState[action.id].numMarcheEdited = false;
       });
     case 'HEURE_DEPART_CELL_CLICKED':
-      return ({
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          heureDepartEdited: true
-        }
-      });
+      return produce(state, draftState => { draftState[action.id].heureDepartEdited = true; });
     case 'STOP_HEURE_DEPART_CELL_EDITION':
-      return ({
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          heureDepartEdited: false
-        }
-      })
+      return produce(state, draftState => { draftState[action.id].heureDepartEdited = false; });
     case 'CIRCULATION_HEURE_DEPART_CHANGED':
-      return ({
-        ...state,
-        [action.id]: {
-          ...withHeureDepart(state[action.id], action.heureDepart),
-          heureDepartEdited: false
-        }
-      })
-      case 'TCT_CELL_CLICKED':
-        return ({
-          ...state,
-          [action.id]: {
-            ...state[action.id],
-            codeTctEdited: true
-          }
-        });
-      case 'STOP_TCT_CELL_EDITION':
-        return ({
-          ...state,
-          [action.id]: {
-            ...state[action.id],
-            codeTctEdited: false
-          }
-        })
-      case 'CIRCULATION_TCT_CHANGED':
-        return ({
-          ...state,
-          [action.id]: {
-            ...withCodeTCT(state[action.id], action.tctId, action.tctCode),
-            codeTctEdited: false
-          }
-        })
+      return produce(state, draftState => {
+        draftState[action.id] = withHeureDepart(draftState[action.id], action.heureDepart);
+        draftState[action.id].heureDepartEdited = false;
+      });
+    case 'TCT_CELL_CLICKED':
+      return produce(state, draftState => { draftState[action.id].codeTctEdited = true; });
+    case 'STOP_TCT_CELL_EDITION':
+      return produce(state, draftState => { draftState[action.id].codeTctEdited = false; });
+    case 'CIRCULATION_TCT_CHANGED':
+      return produce(state, draftState => {
+        draftState[action.id] = withCodeTCT(draftState[action.id], action.tctId, action.tctCode);
+        draftState[action.id].codeTctEdited = false;
+      });
     case 'FAN_HEURE_DEPART_VALIDATED':
       return fanHeureDepart(state, action.start, action.secondsIncrement);
     case 'FAN_NUM_MARCHE_VALIDATED':
-      return fanNumMarche(state, action.start, action.increment);  
+      return fanNumMarche(state, action.start, action.increment);
     default:
       return state
   }
@@ -195,46 +136,27 @@ const duplicateSelectedCirculations = (state) => {
 }
 
 const fanHeureDepart = (state, start, secondsIncrement) => {
-  let { result } = Object.keys(state).reduce((acc, id) => {
-    if (state[id].selected) {
-      let newAcc = ({
-        ...acc,
-        result: {
-          ...acc.result,
-          [id]: withHeureDepart(state[id], acc.currentDate) 
-        }
-      });
-      newAcc.currentDate.setSeconds(acc.currentDate.getSeconds() + secondsIncrement);
-      return newAcc;
-    } else {
-      return ({ ...acc, result: { ...acc.result, [id]: state[id] } });
-    }
-  }, {
-    currentDate: new Date(start),
-    start, result: ({})
+  var currentDate = new Date(start);
+  return produce(state, draftState => {
+    Object.keys(draftState).forEach((id) => {
+      if (draftState[id].selected) {
+        draftState[id] = withHeureDepart(draftState[id], currentDate);
+        currentDate.setSeconds(currentDate.getSeconds() + secondsIncrement);
+      }
+    });
   });
-  return result;
 }
 
 const fanNumMarche = (state, start, increment) => {
-  let { result } = Object.keys(state).reduce((acc, id) => {
-    if (state[id].selected) {
-      return ({
-        ...acc,
-        currentId: acc.currentId + increment,
-        result: {
-          ...acc.result,
-          [id]: withNumMarche(state[id], acc.currentId)
-        }
-      })
-    } else {
-      return ({...acc, result: {...acc.result, [id]: state[id]}})
-    }
-  }, {
-    currentId: start, 
-    result: {}
+  var currentId = start;
+  return produce(state, draftState => {
+    Object.keys(draftState).forEach((id) => {
+      if (draftState[id].selected) {
+        draftState[id] = withNumMarche(draftState[id], currentId);
+        currentId += increment;
+      }
+    })
   });
-  return result;
 }
 
 export default circulationsById
