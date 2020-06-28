@@ -76,6 +76,23 @@ export const changeHeureDepart = (id, heureDepart) => ({
   heureDepart: heureDepart
 })
 
+export const codeTctCellClicked = (id) => ({
+  type: 'TCT_CELL_CLICKED',
+  id: id
+})
+
+export const stopCodeTctCellEdition = (id) => ({
+  type: 'STOP_TCT_CELL_EDITION',
+  id: id
+})
+
+export const changeCodeTct = (id, tctId, tctCode) => ({
+  type: 'CIRCULATION_TCT_CHANGED',
+  id: id,
+  tctId: tctId,
+  tctCode: tctCode
+})
+
 export const fanHeureDepartButtonClicked = () => ({
   type: 'FAN_HEURE_DEPART_BUTTON_CLICKED',
 })

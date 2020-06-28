@@ -86,6 +86,16 @@ export const getCodeTCT = (circulation) => {
     return xmlDom.getElementsByTagName("tct")[0].getElementsByTagName("libelle")[0].innerHTML;
 }
 
+export const withCodeTCT = (circulation, tctId, tctCode) => {
+    let xmlDom = xmlParser.parseFromString(circulation.typeGestion, "application/xml");
+    xmlDom.getElementsByTagName("tct")[0].getElementsByTagName("id")[0].innerHTML = tctId;
+    xmlDom.getElementsByTagName("tct")[0].getElementsByTagName("code")[0].innerHTML = tctCode;
+    xmlDom.getElementsByTagName("tct")[0].getElementsByTagName("libelle")[0].innerHTML = tctCode;
+    return ({
+      ...circulation,
+      typeGestion: xmlSerializer.serializeToString(xmlDom) 
+    })
+}
 export const getHeureDepart = (circulation) => {
     let xmlDom = xmlParser.parseFromString(circulation.etatCirculation, "application/xml");
     return xmlDom.getElementsByTagName("dateHeureOrigine")[0].innerHTML;

@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { clickOnCirculationRow, numMarcheCellClicked, heureDepartCellClicked } from '../app/actions'
+import { clickOnCirculationRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked } from '../app/actions'
 import { getCodeTCT, getHeureDepart, getNumMarche } from '../app/tools/CirculationXmlTools'
 
 import CirculationRowActions from '../containers/CirculationRowActions'
 import CirculationNumMarcheCellEditor from './CirculationNumMarcheCellEditor'
 import CirculationHeureDepartCellEditor from './CirculationHeureDepartCellEditor'
+import CirculationCodeTctCellEditor from './CirculationCodeTctCellEditor'
 
 class CirculationRow extends React.Component {
     render() {
@@ -26,7 +27,18 @@ class CirculationRow extends React.Component {
                             { this.props.numMarche }
                         </span>
                 }</td>
-                <td>{this.props.codeTCT}</td>
+                <td>{
+                    this.props.codeTctEdited
+                        ? <CirculationCodeTctCellEditor
+                            id={this.props.id}
+                            codeTCT={this.props.codeTCT} />
+                        : <span onClick={(event) => {
+                            this.props.dispatch(codeTctCellClicked(this.props.id));
+                            event.stopPropagation();
+                        }}>
+                            { this.props.codeTCT }
+                        </span>
+                }</td>
                 <td>{
                     this.props.heureDepartEdited
                         ? <CirculationHeureDepartCellEditor
@@ -54,7 +66,8 @@ const mapStateToProps = (state, ownProps) => {
         heureDepart: getHeureDepart(circulation),
         selected: circulation.selected,
         numMarcheEdited: circulation.numMarcheEdited,
-        heureDepartEdited: circulation.heureDepartEdited
+        heureDepartEdited: circulation.heureDepartEdited,
+        codeTctEdited: circulation.codeTctEdited
     }
 }
 

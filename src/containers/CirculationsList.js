@@ -9,10 +9,10 @@ const CirculationsList = ({ circulationsIdList }) => (
         <thead>
             <tr>
                 <th className="w-30">Id</th>
-                <th className="w-10">Num. Marche</th>
-                <th className="w-10">Code TCT</th>
-                <th className="w-30">Date et heure de départ</th>
-                <th className="w-20"></th>
+                <th className="w-20">Num. Marche</th>
+                <th className="w-15">Code TCT</th>
+                <th className="w-25">Date et heure de départ</th>
+                <th className="w-10"></th>
             </tr>
         </thead>
         <tbody>

@@ -1,11 +1,12 @@
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToCirculationsObject, withNumMarche, withHeureDepart } from '../tools/CirculationXmlTools'
+import { xmlTextToCirculationsObject, withNumMarche, withHeureDepart, withCodeTCT } from '../tools/CirculationXmlTools'
 
 const defaultCirculationObject = {
   selected: false,
   extended: false,
   numMarcheEdited: false,
-  heureDepartEdited: false
+  heureDepartEdited: false,
+  codeTctEdited: false
 }
 
 const circulationsById = (state = {}, action) => {
@@ -129,6 +130,30 @@ const circulationsById = (state = {}, action) => {
           heureDepartEdited: false
         }
       })
+      case 'TCT_CELL_CLICKED':
+        return ({
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            codeTctEdited: true
+          }
+        });
+      case 'STOP_TCT_CELL_EDITION':
+        return ({
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            codeTctEdited: false
+          }
+        })
+      case 'CIRCULATION_TCT_CHANGED':
+        return ({
+          ...state,
+          [action.id]: {
+            ...withCodeTCT(state[action.id], action.tctId, action.tctCode),
+            codeTctEdited: false
+          }
+        })
     case 'FAN_HEURE_DEPART_VALIDATED':
       return fanHeureDepart(state, action.start, action.secondsIncrement);
     case 'FAN_NUM_MARCHE_VALIDATED':
