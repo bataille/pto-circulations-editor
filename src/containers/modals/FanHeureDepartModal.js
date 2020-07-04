@@ -78,12 +78,13 @@ class FanHeureDepartModal extends React.Component {
                         <Form.Label>Incrément</Form.Label>
                         <Form.Control
                             defaultValue={"00:10:00"}
-                            type="time" placeholder="Incrément"
+                            type="time" step="1" placeholder="Incrément"
                             onChange={(event) => {
                                 var secondsInc =
                                     parseInt(event.target.value.slice(0, 2) * 3600, 10);
                                 secondsInc += parseInt(event.target.value.slice(3, 5) * 60, 10);
-                                secondsInc += parseInt(event.target.value.slice(6, 8), 10);
+                                var secondsPart = parseInt(event.target.value.slice(6, 8), 10);
+                                secondsInc += isNaN(secondsPart) ? 0 : secondsPart;
                                 this.increment = secondsInc;
                             }} />
                     </Form.Group>
