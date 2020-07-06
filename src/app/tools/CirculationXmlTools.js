@@ -104,7 +104,7 @@ export const getHeureDepart = (circulation) => {
 export const withHeureDepart = (circulation, heureDepart) => {
     let heureToWrite = new Date(heureDepart);
     let xmlDom = xmlParser.parseFromString(circulation.etatCirculation, "application/xml");
-    xmlDom.getElementsByTagName("dateHeureOrigine")[0].innerHTML = heureToWrite.toISOString();
+    xmlDom.getElementsByTagName("dateHeureOrigine")[0].innerHTML = heureToWrite.toISOString().slice(0,-5)+"Z";
     return ({
       ...circulation,
       etatCirculation: xmlSerializer.serializeToString(xmlDom) 
