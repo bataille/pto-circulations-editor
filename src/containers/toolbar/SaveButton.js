@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+
 import Button from 'react-bootstrap/Button'
 import { Upload } from 'react-bootstrap-icons';
 
@@ -30,7 +33,7 @@ class SaveButton extends React.Component {
     }
 
     concatAllCirculationsAsText = (circulationsById) => {
-        var text =  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+        var text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
         text += "<circulations>\n";
 
         Object.keys(circulationsById).forEach((id) => {
@@ -59,10 +62,20 @@ class SaveButton extends React.Component {
 
     render() {
         return (
-            <Button variant="success" className={this.props.className}
-                onClick={() => { this.saveAsXmlFile(this.props.fileName) }}>
-                <Upload />
-            </Button >
+            <OverlayTrigger
+                placement="left"
+                delay={{ show: 250, hide: 400 }}
+                overlay={(props) => (
+                    <Tooltip id="save-button-tooltip" {...props}>
+                        Sauvegarder
+                    </Tooltip>
+                )}
+            >
+                <Button variant="success" className={this.props.className}
+                    onClick={() => { this.saveAsXmlFile(this.props.fileName) }}>
+                    <Upload />
+                </Button >
+            </OverlayTrigger>
         );
     }
 

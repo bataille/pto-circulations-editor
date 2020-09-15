@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { submitXmlFile } from '../../app/actions'
 
+import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+
 import Button from 'react-bootstrap/Button'
 import { Download } from 'react-bootstrap-icons';
 
@@ -27,15 +30,24 @@ class LoadButton extends React.Component {
 
   render() {
     return (
-      <Button variant="primary" className={this.props.className}
-        disabled={this.props.isLoading}
-        onClick={() => { if (!this.props.isLoading) { this.upload.click() } }}>
-        <input type="file" id="circulationsFiles"
-          ref={(ref) => this.upload = ref}
-          style={{ display: "none" }}
-          onChange={this.onChangeFile.bind(this)} multiple />
-        <Download />
-      </Button >
+      <OverlayTrigger
+        placement="bottom"
+        delay={{ show: 250, hide: 400 }}
+        overlay={(props) => (
+          <Tooltip id="load-button-tooltip" {...props}>
+            Charger un ou plusieurs fichiers à éditer
+          </Tooltip>)}
+      >
+        <Button variant="primary" className={this.props.className}
+          disabled={this.props.isLoading}
+          onClick={() => { if (!this.props.isLoading) { this.upload.click() } }}>
+          <input type="file" id="circulationsFiles"
+            ref={(ref) => this.upload = ref}
+            style={{ display: "none" }}
+            onChange={this.onChangeFile.bind(this)} multiple />
+          <Download />
+        </Button >
+      </OverlayTrigger>
     );
   }
 
