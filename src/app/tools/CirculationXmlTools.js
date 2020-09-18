@@ -124,3 +124,37 @@ export const getArrivee = (circulation) => {
         .getElementsByTagName("EtapeMission");
     return Etapes[Etapes.length - 1].getElementsByTagName("pr")[0].getAttribute("id");
 }
+
+export const getCirculationXmlText = (circulation) => {
+  var circulationsText = "<Circulation>\n";
+
+  circulationsText += "<id>" + circulation.id + "</id>\n";
+  circulationsText += "<dateCreation>" + circulation.dateCreation + "</dateCreation>\n";
+  circulationsText += "<demandeur>" + circulation.demandeur + "</demandeur>\n"
+  circulationsText += "<localisation>" + circulation.localisation + "</localisation>\n";
+  circulationsText += circulation.parcours + "\n";
+  circulationsText += circulation.mission + "\n";
+  circulationsText += circulation.profilHoraire + "\n";
+  circulationsText += circulation.profilDeCirculation + "\n";
+  circulationsText += circulation.evenementsCirculation + "\n";
+  circulationsText += circulation.etatCirculation + "\n";
+  circulationsText += circulation.typeConvoi + "\n";
+  circulationsText += circulation.typeGestion + "\n";
+  circulationsText += circulation.renvoisStandards + "\n";
+  circulationsText += circulation.parcoursTopologique + "\n";
+
+  circulationsText += "</Circulation>\n";
+
+  return circulationsText;
+}
+
+export const concatAllCirculationsAsText = (circulationsById) => {
+  var text = "<circulations>\n";
+
+  Object.keys(circulationsById).forEach((id) => {
+      text += getCirculationXmlText(circulationsById[id]);
+  });
+
+  text += "</circulations>";
+  return text;
+}
