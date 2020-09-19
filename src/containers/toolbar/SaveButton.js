@@ -46,12 +46,12 @@ class SaveButton extends React.Component {
                 placement="bottom"
                 delay={{ show: 100, hide: 100 }}
                 trigger="click"
-                rootClose="true"
+                rootClose={ true }
                 overlay={(props) => (
                     <Popover id="save-name-popover" placement="bottom" {...props}>
                         <Popover.Title as="h3">Nom du fichier</Popover.Title>
                         <Popover.Content>
-                            <InputGroup className={this.props.className}>
+                            <InputGroup className={this.props.className} style={{ width: 300 }}>
                                 <FormControl
                                     defaultValue={this.fileName}
                                     aria-label="Nom du fichier"
