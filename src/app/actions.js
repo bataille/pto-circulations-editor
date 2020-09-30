@@ -15,19 +15,13 @@ export const flipSelectionAll = () => ({
   type: 'FLIP_SELECT_ALL'
 })
 
-export const changeCirculation = (id, circulation) => ({
-  type: 'CIRCULATION_CHANGED',
-  id: id,
-  circulation: circulation
-})
-
-export const clickOnCirculationRow = (id) => ({
-  type: 'CIRCULATION_ROW_CLICKED_ON',
+export const clickOnRow = (id) => ({
+  type: 'ROW_CLICKED_ON',
   id: id
 })
 
-export const deleteCirculation = (id) => ({
-  type: 'CIRCULATION_DELETED',
+export const deleteRow = (id) => ({
+  type: 'ROW_DELETED',
   id: id
 })
 
@@ -35,13 +29,33 @@ export const deleteSelected = () => ({
   type: 'DELETE_SELECTED_BUTTON_PRESSED',
 })
 
-export const duplicateCirculation = (id) => ({
-  type: 'CIRCULATION_DUPLICATED',
+export const duplicateRow = (id) => ({
+  type: 'ROW_DUPLICATED',
   id: id
 })
 
 export const duplicateSelected = () => ({
   type: 'DUPLICATE_SELECTED_BUTTON_PRESSED',
+})
+
+export const shiftDateButtonClicked = () => ({
+  type: 'SHIFT_DATE_BUTTON_CLICKED',
+})
+
+export const shiftDateClosed = () => ({
+  type: 'SHIFT_DATE_CLOSED'
+})
+
+export const shiftDateValidated = (start, goal) =>  ({
+  type: 'SHIFT_DATE_VALIDATED',
+  start: start,
+  goal: goal
+})
+
+export const changeCirculation = (id, circulation) => ({
+  type: 'CIRCULATION_CHANGED',
+  id: id,
+  circulation: circulation
 })
 
 export const numMarcheCellClicked = (id) => ({
@@ -119,18 +133,4 @@ export const fanNumMarcheValidated = (start, increment) =>  ({
   type: 'FAN_NUM_MARCHE_VALIDATED',
   start: start,
   increment: increment
-})
-
-export const shiftDateButtonClicked = () => ({
-  type: 'SHIFT_DATE_BUTTON_CLICKED',
-})
-
-export const shiftDateClosed = () => ({
-  type: 'SHIFT_DATE_CLOSED'
-})
-
-export const shiftDateValidated = (start, goal) =>  ({
-  type: 'SHIFT_DATE_VALIDATED',
-  start: start,
-  goal: goal
 })

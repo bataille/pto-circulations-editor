@@ -21,6 +21,7 @@ class DuplicateButton extends React.Component {
           </Tooltip>)}
       >
         <Button variant="light" className={this.props.className}
+          disabled={this.props.disabled}
           onClick={() => { this.props.dispatch(duplicateSelected()) }}>
           <Files />
         </Button >

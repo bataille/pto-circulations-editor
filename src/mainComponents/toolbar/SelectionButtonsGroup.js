@@ -22,7 +22,7 @@ class SelectionButtonsGroup extends React.Component {
               Tout sélectionner
             </Tooltip>)}
         >
-          <Button variant="light"
+          <Button variant="light" disabled={this.props.disabled}
             onClick={() => { this.props.dispatch(selectAll()) }}>
             <ListCheck />
           </Button >
@@ -35,7 +35,7 @@ class SelectionButtonsGroup extends React.Component {
               Tout déselectionner
             </Tooltip>)}
         >
-          <Button variant="light"
+          <Button variant="light" disabled={this.props.disabled}
             onClick={() => { this.props.dispatch(unselectAll()) }}>
             <ListTask />
           </Button >
@@ -48,7 +48,7 @@ class SelectionButtonsGroup extends React.Component {
               Inverser la sélection
             </Tooltip>)}
         >
-          <Button variant="light"
+          <Button variant="light" disabled={this.props.disabled}
             onClick={() => { this.props.dispatch(flipSelectionAll()) }}>
             <CircleHalf />
           </Button>

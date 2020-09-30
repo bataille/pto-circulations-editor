@@ -11,6 +11,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import { Check } from 'react-bootstrap-icons';
 
+import { editedObject } from '../../app/enum'
 import { concatAllCirculationsAsText } from '../../app/tools/CirculationXmlTools'
 import { saveAsXmlFile } from '../../app/tools/SaveFile'
 
@@ -36,8 +37,32 @@ class SaveButton extends React.Component {
         this.handleValidate = this.handleValidate.bind(this);
     }
 
+    getCurrentFileName() {
+        var fileType = "";
+
+        switch (this.props.editedObject) {
+            case editedObject.CIRCULATIONS:
+                fileType = "circulations";
+                break;
+            default:
+                fileType = "";
+        }
+
+        return dateStringForFileName() + "_" + fileType + ".xml";
+    }
+
     handleValidate() {
-        saveAsXmlFile(this.fileName, concatAllCirculationsAsText(this.props.circulations));
+        var xmlText = "";
+
+        switch (this.props.editedObject) {
+            case editedObject.CIRCULATIONS:
+                xmlText = concatAllCirculationsAsText(this.props.circulations);
+                break;
+            default:
+                xmlText = "";
+        }
+
+        saveAsXmlFile(this.fileName, xmlText);
     }
 
     render() {
@@ -73,7 +98,8 @@ class SaveButton extends React.Component {
                 )}
             >
                 <Button variant="success" className={this.props.className}
-                onClick={() => { this.fileName = dateStringForFileName() + "_circulations.xml"; }}
+                onClick={() => { this.fileName = this.getCurrentFileName(); }}
+                disabled={this.props.editedObject === editedObject.NONE}
                 >
                     <Upload />
                 </Button >
@@ -85,6 +111,7 @@ class SaveButton extends React.Component {
 
 const mapStateToProps = state => {
     return ({
+        editedObject : state.editedObject,
         circulations: state.circulationsById
     })
 }

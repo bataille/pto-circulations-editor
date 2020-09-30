@@ -1,21 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { duplicateCirculation } from '../../app/actions'
-import { deleteCirculation } from '../../app/actions'
+import { duplicateRow } from '../../app/actions'
+import { deleteRow } from '../../app/actions'
 
 import Button from 'react-bootstrap/Button'
 import { Files } from 'react-bootstrap-icons';
 import { Trash } from 'react-bootstrap-icons';
 
-class CirculationRowAction extends React.Component {
+class RowActions extends React.Component {
 
   render() {
     return (
       <div className={this.props.className}>
         <Button
           onClick={(event) => {
-            this.props.dispatch(duplicateCirculation(this.props.id));
+            this.props.dispatch(duplicateRow(this.props.id));
             event.stopPropagation();
           }}
           variant="outline-dark" size="sm"
@@ -24,7 +24,7 @@ class CirculationRowAction extends React.Component {
         </Button>
         <Button
           onClick={(event) => {
-            this.props.dispatch(deleteCirculation(this.props.id));
+            this.props.dispatch(deleteRow(this.props.id));
             event.stopPropagation();
           }}
           variant="outline-dark" size="sm"
@@ -37,4 +37,4 @@ class CirculationRowAction extends React.Component {
 
 }
 
-export default connect()(CirculationRowAction)
+export default connect()(RowActions)

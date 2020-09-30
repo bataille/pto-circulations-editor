@@ -21,6 +21,7 @@ class DeleteButton extends React.Component {
           </Tooltip>)}
       >
         <Button variant="light" className={this.props.className}
+          disabled={this.props.disabled}
           onClick={() => { this.props.dispatch(deleteSelected()) }}>
           <Trash />
         </Button >

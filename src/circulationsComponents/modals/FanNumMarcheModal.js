@@ -87,7 +87,7 @@ const mapState = (state) => {
     let selectedId = Object.keys(state.circulationsById).find(
         (id) => { return state.circulationsById[id].selected });
     return ({
-        shown: state.toolbar.fanNumMarcheModal.shown,
+        shown: state.main.fanNumMarcheModal.shown,
         selectedNumMarche:
             (selectedId === undefined)
                 ? 0

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { clickOnCirculationRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked } from '../../app/actions'
+import { clickOnRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked } from '../../app/actions'
 import { getCodeTCT, getHeureDepart, getNumMarche } from '../../app/tools/CirculationXmlTools'
 
-import CirculationRowActions from './CirculationRowActions'
+import RowActions from '../../mainComponents/table/RowActions'
 import NumMarcheCellEditor from './NumMarcheCellEditor'
 import HeureDepartCellEditor from './HeureDepartCellEditor'
 import CodeTctCellEditor from './CodeTctCellEditor'
@@ -13,7 +13,7 @@ class CirculationRow extends React.Component {
         let heureDepart = new Date(this.props.heureDepart);
         return (
             <tr className={this.props.selected ? "table-secondary" : ""}
-                onClick={() => { this.props.dispatch(clickOnCirculationRow(this.props.id)) }} >
+                onClick={() => { this.props.dispatch(clickOnRow(this.props.id)) }} >
                 <td>{this.props.id}</td>
                 <td>{
                     this.props.numMarcheEdited
@@ -51,7 +51,7 @@ class CirculationRow extends React.Component {
                             {heureDepart.toLocaleDateString('fr-FR')} - {heureDepart.toLocaleTimeString('fr-FR')}
                         </span>
                 }</td>
-                <td><CirculationRowActions 
+                <td><RowActions 
                 id={this.props.id} className="float-right" /></td>
             </tr>
         );

@@ -116,7 +116,7 @@ const mapState = (state) => {
     let selectedId = Object.keys(state.circulationsById).find(
         (id) => { return state.circulationsById[id].selected });
     return ({
-        shown: state.toolbar.shiftDateModal.shown,
+        shown: state.main.shiftDateModal.shown,
         startDate:
             (selectedId === undefined)
                 ? new Date(Date.now())

@@ -39,17 +39,17 @@ const circulationsById = (state = {}, action) => {
           ...action.circulation
         };
       })
-    case 'CIRCULATION_ROW_CLICKED_ON':
+    case 'ROW_CLICKED_ON':
       return produce(state, draftState => {
         if (draftState[action.id] != null) {
           draftState[action.id].selected = !(draftState[action.id].selected);
         }
       });
-    case 'CIRCULATION_DELETED':
+    case 'ROW_DELETED':
       return omit(action.id, state);
     case 'DELETE_SELECTED_BUTTON_PRESSED':
       return filterObject(state, (circulation) => { return !circulation.selected; });
-    case 'CIRCULATION_DUPLICATED':
+    case 'ROW_DUPLICATED':
       return Object.keys(state).reduce((result, id) => {
         if (id === action.id) {
           let newId = uuidv1();

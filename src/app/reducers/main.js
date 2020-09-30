@@ -17,7 +17,7 @@ let defaultState = {
     }
 }
 
-const toolbar = (state = defaultState, action) => {
+const main = (state = defaultState, action) => {
     switch (action.type) {
         case 'FAN_HEURE_DEPART_BUTTON_CLICKED':
             return produce(state, draftState => { draftState.fanHeureDepartModal.shown = true; });
@@ -39,4 +39,4 @@ const toolbar = (state = defaultState, action) => {
     }
 }
 
-export default toolbar
+export default main

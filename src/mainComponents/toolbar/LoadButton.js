@@ -38,7 +38,7 @@ class LoadButton extends React.Component {
             Charger un ou plusieurs fichiers à éditer
           </Tooltip>)}
       >
-        <Button variant="primary" className={this.props.className}
+        <Button variant="primary" className={this.props.className} size={this.props.size}
           disabled={this.props.isLoading}
           onClick={() => { if (!this.props.isLoading) { this.upload.click() } }}>
           <input type="file" id="circulationsFiles"
@@ -46,6 +46,7 @@ class LoadButton extends React.Component {
             style={{ display: "none" }}
             onChange={this.onChangeFile.bind(this)} multiple />
           <Download />
+          {this.props.buttonText}
         </Button >
       </OverlayTrigger>
     );
@@ -54,7 +55,7 @@ class LoadButton extends React.Component {
 }
 
 const mapState = (state) => {
-  return { isLoading: state.toolbar.loadingInfo.isLoading }
+  return { isLoading: state.main.loadingInfo.isLoading }
 }
 
 export default connect(mapState)(LoadButton)

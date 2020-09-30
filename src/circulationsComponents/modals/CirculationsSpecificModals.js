@@ -2,16 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import FanHeureDepartModal from './FanHeureDepartModal'
 import FanNumMarcheModal from './FanNumMarcheModal';
-import ShiftDateModal from './ShiftDateModal';
 
-class Modals extends React.Component {
+class CirculationSpecificModals extends React.Component {
 
     render() {
         return (
             <>
                 {this.props.fanHeureDepartShown ? <FanHeureDepartModal /> : <></>}
                 {this.props.fanNumMarcheShown ? <FanNumMarcheModal /> : <></>}
-                {this.props.shiftDateShown ? <ShiftDateModal /> : <></>}
             </>
         );
     }
@@ -20,10 +18,9 @@ class Modals extends React.Component {
 
 const mapState = (state) => {
     return ({
-        fanHeureDepartShown: state.toolbar.fanHeureDepartModal.shown,
-        fanNumMarcheShown: state.toolbar.fanNumMarcheModal.shown,
-        shiftDateShown: state.toolbar.shiftDateModal.shown
+        fanHeureDepartShown: state.main.fanHeureDepartModal.shown,
+        fanNumMarcheShown: state.main.fanNumMarcheModal.shown,
     });
 }
 
-export default connect(mapState)(Modals)
+export default connect(mapState)(CirculationSpecificModals)

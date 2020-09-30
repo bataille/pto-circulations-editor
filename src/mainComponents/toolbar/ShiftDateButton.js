@@ -30,7 +30,8 @@ class ShiftDateButton extends React.Component {
                     <Tooltip id="shift-date-tooltip" {...props}>
                         Déplacer la date et l'heure
                     </Tooltip>)}>
-                <Button variant="light" className={this.props.className} onClick={this.handleShow}>
+                <Button variant="light" className={this.props.className} 
+                    disabled={this.props.disabled} onClick={this.handleShow}>
                     <BoxArrowRight />
                 </Button>
             </OverlayTrigger >

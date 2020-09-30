@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 import Table from 'react-bootstrap/Table';
-import CirculationRow from './circulationTableRow/CirculationRow';
+import CirculationRow from './tableRow/CirculationRow';
 
 const CirculationsTable = ({ circulationsIdList }) => (
     <Table hover>
