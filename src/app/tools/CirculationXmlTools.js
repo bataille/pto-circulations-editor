@@ -111,6 +111,13 @@ export const withHeureDepart = (circulation, heureDepart) => {
     })
 }
 
+export const getDureeTrajet = (circulation) => {
+  let xmlDom = xmlParser.parseFromString(circulation.profilHoraire, "application/xml");
+  let detailHoraire = xmlDom.getElementsByTagName("detailsHoraire")[0]
+    .getElementsByTagName("DetailHoraire");
+  return detailHoraire[detailHoraire.length - 1].getElementsByTagName("tempsDepuisOrigine")[0].innerHTML;
+}
+
 export const getDepart = (circulation) => {
     let xmlDom = xmlParser.parseFromString(circulation.mission, "application/xml");
     return xmlDom.getElementsByTagName("etapesMission")[0]
