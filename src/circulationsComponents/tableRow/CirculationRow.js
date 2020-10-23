@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { clickOnRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked } from '../../app/actions'
+import { clickOnRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked, heureArriveeCellClicked } from '../../app/actions'
 import { getCodeTCT, getDureeTrajet, getHeureDepart, getNumMarche } from '../../app/tools/CirculationXmlTools'
 
 import RowActions from '../../mainComponents/table/RowActions'
 import NumMarcheCellEditor from './NumMarcheCellEditor'
 import HeureDepartCellEditor from './HeureDepartCellEditor'
+import HeureArriveeCellEditor from './HeureArriveeCellEditor'
 import CodeTctCellEditor from './CodeTctCellEditor'
 
 class CirculationRow extends React.Component {
@@ -25,7 +26,7 @@ class CirculationRow extends React.Component {
                             this.props.dispatch(numMarcheCellClicked(this.props.id));
                             event.stopPropagation();
                         }}>
-                            { this.props.numMarche }
+                            {this.props.numMarche}
                         </span>
                 }</td>
                 <td>{
@@ -37,7 +38,7 @@ class CirculationRow extends React.Component {
                             this.props.dispatch(codeTctCellClicked(this.props.id));
                             event.stopPropagation();
                         }}>
-                            { this.props.codeTCT }
+                            {this.props.codeTCT}
                         </span>
                 }</td>
                 <td>{
@@ -52,9 +53,21 @@ class CirculationRow extends React.Component {
                             {heureDepart.toLocaleDateString('fr-FR')} - {heureDepart.toLocaleTimeString('fr-FR')}
                         </span>
                 }</td>
-                <td><span>{heureArrivee.toLocaleDateString('fr-FR')} - {heureArrivee.toLocaleTimeString('fr-FR')}</span></td>
-                <td><RowActions 
-                id={this.props.id} className="float-right" /></td>
+                <td>{
+                    this.props.heureArriveeEdited
+                        ? <HeureArriveeCellEditor
+                            id={this.props.id}
+                            heureDepart={this.props.heureDepart}
+                            dureeTrajet={this.props.dureeTrajet} />
+                        : <span onClick={(event) => {
+                            this.props.dispatch(heureArriveeCellClicked(this.props.id));
+                            event.stopPropagation();
+                        }}>
+                            {heureArrivee.toLocaleDateString('fr-FR')} - {heureArrivee.toLocaleTimeString('fr-FR')}
+                        </span>
+                }</td>
+                <td><RowActions
+                    id={this.props.id} className="float-right" /></td>
             </tr>
         );
     }
@@ -66,10 +79,11 @@ const mapStateToProps = (state, ownProps) => {
         numMarche: getNumMarche(circulation),
         codeTCT: getCodeTCT(circulation),
         heureDepart: getHeureDepart(circulation),
-        dureeTrajet : getDureeTrajet(circulation),
+        dureeTrajet: getDureeTrajet(circulation),
         selected: circulation.selected,
         numMarcheEdited: circulation.numMarcheEdited,
         heureDepartEdited: circulation.heureDepartEdited,
+        heureArriveeEdited: circulation.heureArriveeEdited,
         codeTctEdited: circulation.codeTctEdited
     }
 }

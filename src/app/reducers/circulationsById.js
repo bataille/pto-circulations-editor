@@ -7,6 +7,7 @@ const defaultCirculationObject = {
   extended: false,
   numMarcheEdited: false,
   heureDepartEdited: false,
+  heureArriveeEdited: false,
   codeTctEdited: false
 }
 
@@ -78,13 +79,24 @@ const circulationsById = (state = {}, action) => {
         draftState[action.id].numMarcheEdited = false;
       });
     case 'HEURE_DEPART_CELL_CLICKED':
-      return produce(state, draftState => { draftState[action.id].heureDepartEdited = true; });
+      return produce(state, draftState => { 
+        draftState[action.id].heureDepartEdited = true; 
+        draftState[action.id].heureArriveeEdited = false; 
+      });
     case 'STOP_HEURE_DEPART_CELL_EDITION':
       return produce(state, draftState => { draftState[action.id].heureDepartEdited = false; });
+    case 'HEURE_ARRIVEE_CELL_CLICKED':
+        return produce(state, draftState => { 
+          draftState[action.id].heureArriveeEdited = true; 
+          draftState[action.id].heureDepartEdited = false; 
+        });
+    case 'STOP_HEURE_ARRIVEE_CELL_EDITION':
+        return produce(state, draftState => { draftState[action.id].heureArriveeEdited = false; });
     case 'CIRCULATION_HEURE_DEPART_CHANGED':
       return produce(state, draftState => {
         draftState[action.id] = withHeureDepart(draftState[action.id], action.heureDepart);
         draftState[action.id].heureDepartEdited = false;
+        draftState[action.id].heureArriveeEdited = false;
       });
     case 'TCT_CELL_CLICKED':
       return produce(state, draftState => { draftState[action.id].codeTctEdited = true; });

@@ -90,6 +90,16 @@ export const changeHeureDepart = (id, heureDepart) => ({
   heureDepart: heureDepart
 })
 
+export const heureArriveeCellClicked = (id) => ({
+  type: 'HEURE_ARRIVEE_CELL_CLICKED',
+  id: id
+})
+
+export const stopHeureArriveeCellEdition = (id) => ({
+  type: 'STOP_HEURE_ARRIVEE_CELL_EDITION',
+  id: id
+})
+
 export const codeTctCellClicked = (id) => ({
   type: 'TCT_CELL_CLICKED',
   id: id
