@@ -10,6 +10,8 @@ class CurrentlyEditedLabel extends React.Component {
         switch (this.props.editedObject) {
             case editedObject.CIRCULATIONS:
                 return (<Badge variant="primary" {...this.props}>Circulations</Badge>);
+            case editedObject.PTX:
+                return (<Badge variant="warning" {...this.props}>PTX</Badge>);
             case editedObject.NONE:
             default:
                 return (<></>);

@@ -1,4 +1,5 @@
 export const editedObject = {
     NONE: 'none',
-    CIRCULATIONS: 'circulations'
+    CIRCULATIONS: 'circulations',
+    PTX: "ptx"
 }

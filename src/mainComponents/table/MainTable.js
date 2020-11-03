@@ -2,9 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { editedObject } from '../../app/enum'
 
-import CirculationsTable from '../../circulationsComponents/CirculationsTable'
 import Container from 'react-bootstrap/Container'
+
 import LoadButton from '../toolbar/LoadButton'
+import CirculationsTable from '../../circulationsComponents/CirculationsTable'
+import PtxsTable from '../../ptxComponents/PtxsTable'
 
 class MainTable extends React.Component {
 
@@ -12,6 +14,8 @@ class MainTable extends React.Component {
         switch (this.props.editedObject) {
             case editedObject.CIRCULATIONS:
                 return (<CirculationsTable />);
+            case editedObject.PTX:
+                return (<PtxsTable />);
             case editedObject.NONE:
             default:
                 return (
