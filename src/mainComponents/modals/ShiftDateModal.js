@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { shiftDateButtonClicked, shiftDateClosed, shiftDateValidated } from '../../app/actions'
 import { getHeureDepart } from '../../app/tools/CirculationXmlTools'
+import { getDateHeureDebut } from '../../app/tools/PtxXmlTools'
+import { editedObject } from '../../app/enum'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -113,14 +115,35 @@ class ShiftDateModal extends React.Component {
 }
 
 const mapState = (state) => {
-    let selectedId = Object.keys(state.circulationsById).find(
-        (id) => { return state.circulationsById[id].selected });
+    let getSelectedId = () => {
+        switch (state.editedObject) {
+            case editedObject.CIRCULATIONS:
+                return Object.keys(state.circulationsById).find(
+                    (id) => { return state.circulationsById[id].selected });
+            case editedObject.PTX:
+                return Object.keys(state.ptxsById).find(
+                    (id) => { return state.ptxsById[id].selected });
+            default:
+                return;
+        };
+    }
+    let getHeure = (id) => {
+        switch (state.editedObject) {
+            case editedObject.CIRCULATIONS:
+                return getHeureDepart(state.circulationsById[id]);
+            case editedObject.PTX:
+                return getDateHeureDebut(state.ptxsById[id]);
+            default:
+                return "";
+        };
+    }
+    let selectedId = getSelectedId();
     return ({
         shown: state.main.shiftDateModal.shown,
         startDate:
             (selectedId === undefined)
                 ? new Date(Date.now())
-                : new Date(getHeureDepart(state.circulationsById[selectedId]))
+                : new Date(getHeure(selectedId))
     });
 }
 

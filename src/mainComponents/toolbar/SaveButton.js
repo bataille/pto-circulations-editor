@@ -13,6 +13,7 @@ import { Check } from 'react-bootstrap-icons';
 
 import { editedObject } from '../../app/enum'
 import { concatAllCirculationsAsText } from '../../app/tools/CirculationXmlTools'
+import { concatAllPtxsAsText } from '../../app/tools/PtxXmlTools'
 import { saveAsXmlFile } from '../../app/tools/SaveFile'
 
 const dateStringForFileName = () => {
@@ -38,16 +39,7 @@ class SaveButton extends React.Component {
     }
 
     getCurrentFileName() {
-        var fileType = "";
-
-        switch (this.props.editedObject) {
-            case editedObject.CIRCULATIONS:
-                fileType = "circulations";
-                break;
-            default:
-                fileType = "";
-        }
-
+        var fileType = this.props.editedObject;
         return dateStringForFileName() + "_" + fileType + ".xml";
     }
 
@@ -57,6 +49,9 @@ class SaveButton extends React.Component {
         switch (this.props.editedObject) {
             case editedObject.CIRCULATIONS:
                 xmlText = concatAllCirculationsAsText(this.props.circulations);
+                break;
+            case editedObject.PTX:
+                xmlText = concatAllPtxsAsText(this.props.ptxs);
                 break;
             default:
                 xmlText = "";
@@ -112,7 +107,8 @@ class SaveButton extends React.Component {
 const mapStateToProps = state => {
     return ({
         editedObject : state.editedObject,
-        circulations: state.circulationsById
+        circulations: state.circulationsById,
+        ptxs: state.ptxsById,
     })
 }
 

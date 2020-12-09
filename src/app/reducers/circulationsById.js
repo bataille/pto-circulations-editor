@@ -69,6 +69,8 @@ const circulationsById = (state = {}, action) => {
       }, {});
     case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
       return duplicateSelectedCirculations(state);
+    case 'CHANGE_ID_SELECTED_BUTTON_PRESSED':
+      return changeIdSelectedCirculations(state);
     case 'NUM_MARCHE_CELL_CLICKED':
       return produce(state, draftState => { draftState[action.id].numMarcheEdited = true; });
     case 'STOP_NUM_MARCHE_CELL_EDITION':
@@ -141,6 +143,23 @@ const duplicateSelectedCirculations = (state) => {
           ...state[id],
           id: newId,
           selected: false
+        }
+      })
+    } else {
+      return ({ ...result, [id]: state[id] })
+    }
+  }, {});
+}
+
+const changeIdSelectedCirculations = (state) => {
+  return Object.keys(state).reduce((result, id) => {
+    if (state[id].selected) {
+      let newId = uuidv1();
+      return ({
+        ...result,
+        [newId]: {
+          ...state[id],
+          id: newId
         }
       })
     } else {

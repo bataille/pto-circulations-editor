@@ -38,6 +38,10 @@ export const duplicateSelected = () => ({
   type: 'DUPLICATE_SELECTED_BUTTON_PRESSED',
 })
 
+export const changeIdSelected = () => ({
+  type: 'CHANGE_ID_SELECTED_BUTTON_PRESSED',
+})
+
 export const shiftDateButtonClicked = () => ({
   type: 'SHIFT_DATE_BUTTON_CLICKED',
 })
@@ -143,4 +147,20 @@ export const fanNumMarcheValidated = (start, increment) =>  ({
   type: 'FAN_NUM_MARCHE_VALIDATED',
   start: start,
   increment: increment
+})
+
+export const dateHeureDebutCellClicked = (id) => ({
+  type: 'DATE_HEURE_DEBUT_CELL_CLICKED',
+  id: id
+})
+
+export const stopDateHeureDebutCellEdition = (id) => ({
+  type: 'STOP_DATE_HEURE_DEBUT_CELL_EDITION',
+  id: id
+})
+
+export const changeDateHeureDebut = (id, heureDebut) => ({
+  type: 'DATE_HEURE_DEBUT_CHANGED',
+  id: id,
+  dateHeureDebut: heureDebut
 })

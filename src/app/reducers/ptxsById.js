@@ -1,10 +1,11 @@
 import { produce } from 'immer'
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToPtxObject } from '../tools/PtxXmlTools'
+import { xmlTextToPtxObject, getDateHeureDebut, withId, withDateHeureDebut } from '../tools/PtxXmlTools'
 
 const defaultPtxObject = {
   selected: false,
   extended: false,
+  dateHeureDebutEdited: false,
 }
 
 const ptxsById = (state = {}, action) => {
@@ -58,8 +59,19 @@ const ptxsById = (state = {}, action) => {
         }, {});
       case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
         return duplicateSelectedPtx(state);
+      case 'CHANGE_ID_SELECTED_BUTTON_PRESSED':
+        return changeIdSelectedPtx(state);
       case 'SHIFT_DATE_VALIDATED':
         return shiftDate(state, action.start, action.goal);
+      case 'DATE_HEURE_DEBUT_CELL_CLICKED':
+          return produce(state, draftState => { draftState[action.id].dateHeureDebutEdited = true; });
+      case 'STOP_DATE_HEURE_DEBUT_CELL_EDITION':
+          return produce(state, draftState => { draftState[action.id].dateHeureDebutEdited = false; });
+      case 'DATE_HEURE_DEBUT_CHANGED':
+          return produce(state, draftState => {
+              draftState[action.id] = withDateHeureDebut(draftState[action.id], action.dateHeureDebut);
+              draftState[action.id].dateHeureDebutEdited = false;
+            });
       default:
         return state
     }
@@ -96,12 +108,31 @@ const duplicateSelectedPtx = (state) => {
   }, {});
 }
 
+const changeIdSelectedPtx = (state) => {
+  return Object.keys(state).reduce((result, id) => {
+    if (state[id].selected) {
+      let newId = uuidv1();
+      return ({
+        ...result,
+        [newId]: withId(state[id], newId)
+      })
+    } else {
+      return ({ ...result, [id]: state[id] })
+    }
+  }, {});
+}
+
 const shiftDate = (state, start, goal) => {
   const startDate = new Date(start);
   const goalDate = new Date(goal);
   const delta = goalDate - startDate;
 
-  return state;
+  return produce(state, draftState => {
+    Object.keys(draftState).forEach((id) => {
+      const origDate = new Date(getDateHeureDebut(draftState[id]));
+      draftState[id] = withDateHeureDebut(draftState[id], (new Date(origDate.getTime() + delta)));
+    });
+  });
 }
 
 export default ptxsById

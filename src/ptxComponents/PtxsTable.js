@@ -9,7 +9,10 @@ const PtxsTable = ({ ptxsIdList }) => (
     <Table hover>
         <thead>
             <tr>
-                <th className="w-30">Id</th>
+                <th className="w-20">Id</th>
+                <th className="w-10">Type ressource</th>
+                <th className="w-30">Description ressource</th>
+                <th className="w-30">Date et heure de début</th>
                 <th className="w-10"></th>
             </tr>
         </thead>

@@ -15,15 +15,6 @@ class LoadButton extends React.Component {
     event.preventDefault();
     Promise.all(Array.from(event.target.files).map((file) => { return file.text(); }))
       .then(textArray => {
-        // var fileText = "";
-        // if (textArray.length === 1) {
-        //   fileText = textArray[0];
-        // } else {
-        //   fileText = textArray.reduce(
-        //     (acc, text) => { return (acc + text + "\n"); },
-        //     "<circulations>");
-        //   fileText += "</circulations>"
-        // }
         textArray.forEach(textFile => { this.props.dispatch(submitXmlFile(textFile)); });
       });
   }

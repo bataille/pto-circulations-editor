@@ -11,6 +11,7 @@ import LoadButton from './LoadButton'
 import SaveButton from './SaveButton'
 import DeleteButton from './DeleteButton'
 import DuplicateButton from './DuplicateButton'
+import ChangeIdButton from './ChangeIdButton'
 import ShiftDateButton from './ShiftDateButton'
 import ObjectSpecificToolbar from './ObjectSpecificToolbar'
 import CurrentlyEditedLabel from './CurrentlyEditedLabel'
@@ -23,6 +24,7 @@ const Toolbar = (props) => (
             <DuplicateButton disabled={props.editedObject === editedObject.NONE} />
             <DeleteButton disabled={props.editedObject === editedObject.NONE} />
         </ButtonGroup>
+        <ChangeIdButton className="mr-2"disabled={props.editedObject === editedObject.NONE} />
 
         <ShiftDateButton className="mr-2" disabled={props.editedObject === editedObject.NONE } />
         <ObjectSpecificToolbar />
