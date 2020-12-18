@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
-import { editedObject } from '../../app/enum'
+import { editedObject } from '../../app/enums/editedObject'
 
 import SelectionButtonsGroup from './SelectionButtonsGroup'
 import LoadButton from './LoadButton'
@@ -31,7 +31,7 @@ const Toolbar = (props) => (
 
         <Navbar.Collapse className="justify-content-end">
             <CurrentlyEditedLabel className="mr-sm-3" />
-            <SaveButton fileName="circulations.xml" />
+            <SaveButton />
         </Navbar.Collapse>
     </Navbar>
 )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { fanHeureDepartButtonClicked, fanHeureDepartClosed, fanHeureDepartValidated } from '../../app/actions'
-import { getHeureDepart } from '../../app/tools/CirculationXmlTools'
+import { circulationXmlTools } from '../../app/tools/xmlTools'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -111,7 +111,7 @@ const mapState = (state) => {
         startDate:
             (selectedId === undefined)
                 ? new Date(Date.now())
-                : new Date(getHeureDepart(state.circulationsById[selectedId]))
+                : new Date(circulationXmlTools.getHeureDepart(state.circulationsById[selectedId]))
     });
 }
 

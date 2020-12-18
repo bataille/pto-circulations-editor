@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getCodesTctArray, getCodeTctId } from '../../app/tools/CodeTctTools'
+import { getCodesTctArray, getCodeTctId } from '../../app/tools/codeTctTools'
 import { changeCodeTct, stopCodeTctCellEdition } from '../../app/actions'
 
 import InputGroup from 'react-bootstrap/InputGroup'

@@ -4,7 +4,7 @@ import { clickOnRow, dateHeureDebutCellClicked } from '../../app/actions'
 
 import RowActions from '../../mainComponents/table/RowActions'
 import DateHeureDebutCellEditor from './DateHeureDebutCellEditor'
-import { getPtxRessourcesInfraType, getPtxRessourcesDescription, getDateHeureDebut } from '../../app/tools/PtxXmlTools';
+import { ptxXmlTools } from '../../app/tools/xmlTools'
 
 class PtxRow extends React.Component {
     render() {
@@ -38,9 +38,9 @@ const mapStateToProps = (state, ownProps) => {
     let ptx = state.ptxsById[ownProps.id];
     return {
         selected: ptx.selected,
-        ressourceInfraType: getPtxRessourcesInfraType(ptx),
-        ressourceDescription: getPtxRessourcesDescription(ptx),
-        dateHeureDebut: getDateHeureDebut(ptx),
+        ressourceInfraType: ptxXmlTools.getPtxRessourcesInfraType(ptx),
+        ressourceDescription: ptxXmlTools.getPtxRessourcesDescription(ptx),
+        dateHeureDebut: ptxXmlTools.getDateHeureDebut(ptx),
         dateHeureDebutEdited: ptx.dateHeureDebutEdited,
     }
 }

@@ -1,6 +1,6 @@
 import { produce } from 'immer'
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToCirculationsObject, getHeureDepart, withNumMarche, withHeureDepart, withCodeTCT } from '../tools/CirculationXmlTools'
+import { circulationXmlTools } from '../tools/xmlTools'
 
 const defaultCirculationObject = {
   selected: false,
@@ -14,7 +14,7 @@ const defaultCirculationObject = {
 const circulationsById = (state = {}, action) => {
   switch (action.type) {
     case 'XML_FILE_SUBMITED':
-      let circulationsToAdd = xmlTextToCirculationsObject(action.xmlText, defaultCirculationObject);
+      let circulationsToAdd = circulationXmlTools.xmlTextToElementsObject(action.xmlText, defaultCirculationObject);
       return ({
         ...state,
         ...circulationsToAdd
@@ -77,26 +77,26 @@ const circulationsById = (state = {}, action) => {
       return produce(state, draftState => { draftState[action.id].numMarcheEdited = false; });
     case 'CIRCULATION_NUM_MARCHE_CHANGED':
       return produce(state, draftState => {
-        draftState[action.id] = withNumMarche(draftState[action.id], action.numMarche);
+        draftState[action.id] = circulationXmlTools.withNumMarche(draftState[action.id], action.numMarche);
         draftState[action.id].numMarcheEdited = false;
       });
     case 'HEURE_DEPART_CELL_CLICKED':
-      return produce(state, draftState => { 
-        draftState[action.id].heureDepartEdited = true; 
-        draftState[action.id].heureArriveeEdited = false; 
+      return produce(state, draftState => {
+        draftState[action.id].heureDepartEdited = true;
+        draftState[action.id].heureArriveeEdited = false;
       });
     case 'STOP_HEURE_DEPART_CELL_EDITION':
       return produce(state, draftState => { draftState[action.id].heureDepartEdited = false; });
     case 'HEURE_ARRIVEE_CELL_CLICKED':
-        return produce(state, draftState => { 
-          draftState[action.id].heureArriveeEdited = true; 
-          draftState[action.id].heureDepartEdited = false; 
-        });
+      return produce(state, draftState => {
+        draftState[action.id].heureArriveeEdited = true;
+        draftState[action.id].heureDepartEdited = false;
+      });
     case 'STOP_HEURE_ARRIVEE_CELL_EDITION':
-        return produce(state, draftState => { draftState[action.id].heureArriveeEdited = false; });
+      return produce(state, draftState => { draftState[action.id].heureArriveeEdited = false; });
     case 'CIRCULATION_HEURE_DEPART_CHANGED':
       return produce(state, draftState => {
-        draftState[action.id] = withHeureDepart(draftState[action.id], action.heureDepart);
+        draftState[action.id] = circulationXmlTools.withHeureDepart(draftState[action.id], action.heureDepart);
         draftState[action.id].heureDepartEdited = false;
         draftState[action.id].heureArriveeEdited = false;
       });
@@ -106,7 +106,7 @@ const circulationsById = (state = {}, action) => {
       return produce(state, draftState => { draftState[action.id].codeTctEdited = false; });
     case 'CIRCULATION_TCT_CHANGED':
       return produce(state, draftState => {
-        draftState[action.id] = withCodeTCT(draftState[action.id], action.tctId, action.tctCode);
+        draftState[action.id] = circulationXmlTools.withCodeTCT(draftState[action.id], action.tctId, action.tctCode);
         draftState[action.id].codeTctEdited = false;
       });
     case 'FAN_HEURE_DEPART_VALIDATED':
@@ -173,7 +173,7 @@ const fanHeureDepart = (state, start, secondsIncrement) => {
   return produce(state, draftState => {
     Object.keys(draftState).forEach((id) => {
       if (draftState[id].selected) {
-        draftState[id] = withHeureDepart(draftState[id], currentDate);
+        draftState[id] = circulationXmlTools.withHeureDepart(draftState[id], currentDate);
         currentDate.setSeconds(currentDate.getSeconds() + secondsIncrement);
       }
     });
@@ -185,7 +185,7 @@ const fanNumMarche = (state, start, increment) => {
   return produce(state, draftState => {
     Object.keys(draftState).forEach((id) => {
       if (draftState[id].selected) {
-        draftState[id] = withNumMarche(draftState[id], currentId);
+        draftState[id] = circulationXmlTools.withNumMarche(draftState[id], currentId);
         currentId += increment;
       }
     })
@@ -199,8 +199,8 @@ const shiftDate = (state, start, goal) => {
 
   return produce(state, draftState => {
     Object.keys(draftState).forEach((id) => {
-      const origDate = new Date(getHeureDepart(draftState[id]));
-      draftState[id] = withHeureDepart(draftState[id], (new Date(origDate.getTime() + delta)));
+      const origDate = new Date(circulationXmlTools.getHeureDepart(draftState[id]));
+      draftState[id] = circulationXmlTools.withHeureDepart(draftState[id], (new Date(origDate.getTime() + delta)));
     });
   });
 }

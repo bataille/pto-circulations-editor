@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { fanNumMarcheButtonClicked, fanNumMarcheClosed, fanNumMarcheValidated } from '../../app/actions'
+import { circulationXmlTools } from '../../app/tools/xmlTools'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
-import { getNumMarche } from '../../app/tools/CirculationXmlTools'
 
 class FanNumMarcheModal extends React.Component {
     constructor(props) {
@@ -91,7 +91,7 @@ const mapState = (state) => {
         selectedNumMarche:
             (selectedId === undefined)
                 ? 0
-                : parseInt(getNumMarche(state.circulationsById[selectedId]))
+                : parseInt(circulationXmlTools.getNumMarche(state.circulationsById[selectedId]))
     });
 }
 

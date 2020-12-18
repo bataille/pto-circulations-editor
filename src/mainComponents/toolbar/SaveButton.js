@@ -11,10 +11,8 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import { Check } from 'react-bootstrap-icons';
 
-import { editedObject } from '../../app/enum'
-import { concatAllCirculationsAsText } from '../../app/tools/CirculationXmlTools'
-import { concatAllPtxsAsText } from '../../app/tools/PtxXmlTools'
-import { saveAsXmlFile } from '../../app/tools/SaveFile'
+import { editedObject, getEditedObjectXmlTools, getEditedObjectState } from '../../app/enums/editedObject'
+import { saveAsXmlFile } from '../../app/tools/saveFile'
 
 const dateStringForFileName = () => {
     let now = new Date();
@@ -44,19 +42,8 @@ class SaveButton extends React.Component {
     }
 
     handleValidate() {
-        var xmlText = "";
-
-        switch (this.props.editedObject) {
-            case editedObject.CIRCULATIONS:
-                xmlText = concatAllCirculationsAsText(this.props.circulations);
-                break;
-            case editedObject.PTX:
-                xmlText = concatAllPtxsAsText(this.props.ptxs);
-                break;
-            default:
-                xmlText = "";
-        }
-
+        var xmlText = getEditedObjectXmlTools(this.props.editedObject)
+            .concatAllElementsAsXmlText(getEditedObjectState(this.props.state));
         saveAsXmlFile(this.fileName, xmlText);
     }
 
@@ -66,7 +53,7 @@ class SaveButton extends React.Component {
                 placement="bottom"
                 delay={{ show: 100, hide: 100 }}
                 trigger="click"
-                rootClose={ true }
+                rootClose={true}
                 overlay={(props) => (
                     <Popover id="save-name-popover" placement="bottom" {...props}>
                         <Popover.Title as="h3">Nom du fichier</Popover.Title>
@@ -93,8 +80,8 @@ class SaveButton extends React.Component {
                 )}
             >
                 <Button variant="success" className={this.props.className}
-                onClick={() => { this.fileName = this.getCurrentFileName(); }}
-                disabled={this.props.editedObject === editedObject.NONE}
+                    onClick={() => { this.fileName = this.getCurrentFileName(); }}
+                    disabled={this.props.editedObject === editedObject.NONE}
                 >
                     <Upload />
                 </Button >
@@ -106,9 +93,8 @@ class SaveButton extends React.Component {
 
 const mapStateToProps = state => {
     return ({
-        editedObject : state.editedObject,
-        circulations: state.circulationsById,
-        ptxs: state.ptxsById,
+        editedObject: state.editedObject,
+        state: state
     })
 }
 

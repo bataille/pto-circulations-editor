@@ -1,6 +1,6 @@
 import { produce } from 'immer'
 import { v1 as uuidv1 } from 'uuid';
-import { xmlTextToPtxObject, getDateHeureDebut, withId, withDateHeureDebut } from '../tools/PtxXmlTools'
+import { ptxXmlTools } from '../tools/xmlTools'
 
 const defaultPtxObject = {
   selected: false,
@@ -11,7 +11,7 @@ const defaultPtxObject = {
 const ptxsById = (state = {}, action) => {
   switch (action.type) {
     case 'XML_FILE_SUBMITED':
-      let ptxsToAdd = xmlTextToPtxObject(action.xmlText, defaultPtxObject);
+      let ptxsToAdd = ptxXmlTools.xmlTextToElementsObject(action.xmlText, defaultPtxObject);
       return ({
         ...state,
         ...ptxsToAdd
@@ -69,7 +69,7 @@ const ptxsById = (state = {}, action) => {
           return produce(state, draftState => { draftState[action.id].dateHeureDebutEdited = false; });
       case 'DATE_HEURE_DEBUT_CHANGED':
           return produce(state, draftState => {
-              draftState[action.id] = withDateHeureDebut(draftState[action.id], action.dateHeureDebut);
+              draftState[action.id] = ptxXmlTools.withDateHeureDebut(draftState[action.id], action.dateHeureDebut);
               draftState[action.id].dateHeureDebutEdited = false;
             });
       default:
@@ -114,7 +114,7 @@ const changeIdSelectedPtx = (state) => {
       let newId = uuidv1();
       return ({
         ...result,
-        [newId]: withId(state[id], newId)
+        [newId]: ptxXmlTools.withId(state[id], newId)
       })
     } else {
       return ({ ...result, [id]: state[id] })
@@ -129,8 +129,8 @@ const shiftDate = (state, start, goal) => {
 
   return produce(state, draftState => {
     Object.keys(draftState).forEach((id) => {
-      const origDate = new Date(getDateHeureDebut(draftState[id]));
-      draftState[id] = withDateHeureDebut(draftState[id], (new Date(origDate.getTime() + delta)));
+      const origDate = new Date(ptxXmlTools.getDateHeureDebut(draftState[id]));
+      draftState[id] = ptxXmlTools.withDateHeureDebut(draftState[id], (new Date(origDate.getTime() + delta)));
     });
   });
 }

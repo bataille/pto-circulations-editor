@@ -32,7 +32,7 @@ class LoadButton extends React.Component {
         <Button variant="primary" className={this.props.className} size={this.props.size}
           disabled={this.props.isLoading}
           onClick={() => { if (!this.props.isLoading) { this.upload.click() } }}>
-          <input type="file" id="circulationsFiles"
+          <input type="file" id="inputFiles"
             ref={(ref) => this.upload = ref}
             style={{ display: "none" }}
             onChange={this.onChangeFile.bind(this)} multiple />

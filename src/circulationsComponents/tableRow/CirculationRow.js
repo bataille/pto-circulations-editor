@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { clickOnRow, numMarcheCellClicked, heureDepartCellClicked, codeTctCellClicked, heureArriveeCellClicked } from '../../app/actions'
-import { getCodeTCT, getDureeTrajet, getHeureDepart, getNumMarche } from '../../app/tools/CirculationXmlTools'
+import { circulationXmlTools } from '../../app/tools/xmlTools'
 
 import RowActions from '../../mainComponents/table/RowActions'
 import NumMarcheCellEditor from './NumMarcheCellEditor'
@@ -76,10 +76,10 @@ class CirculationRow extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     let circulation = state.circulationsById[ownProps.id];
     return {
-        numMarche: getNumMarche(circulation),
-        codeTCT: getCodeTCT(circulation),
-        heureDepart: getHeureDepart(circulation),
-        dureeTrajet: getDureeTrajet(circulation),
+        numMarche: circulationXmlTools.getNumMarche(circulation),
+        codeTCT: circulationXmlTools.getCodeTCT(circulation),
+        heureDepart: circulationXmlTools.getHeureDepart(circulation),
+        dureeTrajet: circulationXmlTools.getDureeTrajet(circulation),
         selected: circulation.selected,
         numMarcheEdited: circulation.numMarcheEdited,
         heureDepartEdited: circulation.heureDepartEdited,

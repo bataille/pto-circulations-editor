@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { editedObject } from '../../app/enum'
+import { editedObject } from '../../app/enums/editedObject'
 import ShiftDateModal from './ShiftDateModal';
 import CirculationsSpecificModals from '../../circulationsComponents/modals/CirculationsSpecificModals'
 

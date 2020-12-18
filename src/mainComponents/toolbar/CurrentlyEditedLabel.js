@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Badge from 'react-bootstrap/Badge'
-import { editedObject } from '../../app/enum'
+import { editedObject } from '../../app/enums/editedObject'
 
 class CurrentlyEditedLabel extends React.Component {
 

@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { editedObject } from '../enum'
+import { editedObject } from '../enums/editedObject'
 
 import circulationsById from './circulationsById'
 import ptxsById from './ptxsById'
