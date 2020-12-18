@@ -32,5 +32,6 @@ export class PtxXmlTools extends GenericXmlTools {
   }
 
   getHeure = this.getDateHeureDebut;
-
+  withHeure = this.withDateHeureDebut;
+  
 }

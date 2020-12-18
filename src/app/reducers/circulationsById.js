@@ -1,10 +1,9 @@
 import { produce } from 'immer'
-import { v1 as uuidv1 } from 'uuid';
 import { circulationXmlTools } from '../tools/xmlTools'
+import { defaultObject, defaultObjectsById } from './defaultObjectsById'
 
 const defaultCirculationObject = {
-  selected: false,
-  extended: false,
+  ...defaultObject,
   numMarcheEdited: false,
   heureDepartEdited: false,
   heureArriveeEdited: false,
@@ -13,26 +12,6 @@ const defaultCirculationObject = {
 
 const circulationsById = (state = {}, action) => {
   switch (action.type) {
-    case 'XML_FILE_SUBMITED':
-      let circulationsToAdd = circulationXmlTools.xmlTextToElementsObject(action.xmlText, defaultCirculationObject);
-      return ({
-        ...state,
-        ...circulationsToAdd
-      });
-    case 'SELECT_ALL':
-      return produce(state, draftState => {
-        Object.keys(draftState).forEach((id => { draftState[id].selected = true; }));
-      });
-    case 'UNSELECT_ALL':
-      return produce(state, draftState => {
-        Object.keys(draftState).forEach((id => { draftState[id].selected = false; }));
-      });
-    case 'FLIP_SELECT_ALL':
-      return produce(state, draftState => {
-        Object.keys(draftState).forEach((id => {
-          draftState[id].selected = !(draftState[id].selected);
-        }));
-      });
     case 'CIRCULATION_CHANGED':
       return produce(state, draftState => {
         draftState[action.id] = {
@@ -40,37 +19,6 @@ const circulationsById = (state = {}, action) => {
           ...action.circulation
         };
       })
-    case 'ROW_CLICKED_ON':
-      return produce(state, draftState => {
-        if (draftState[action.id] != null) {
-          draftState[action.id].selected = !(draftState[action.id].selected);
-        }
-      });
-    case 'ROW_DELETED':
-      return omit(action.id, state);
-    case 'DELETE_SELECTED_BUTTON_PRESSED':
-      return filterObject(state, (circulation) => { return !circulation.selected; });
-    case 'ROW_DUPLICATED':
-      return Object.keys(state).reduce((result, id) => {
-        if (id === action.id) {
-          let newId = uuidv1();
-          return ({
-            ...result,
-            [id]: state[id],
-            [newId]: {
-              ...state[id],
-              id: newId,
-              selected: false
-            }
-          })
-        } else {
-          return ({ ...result, [id]: state[id] })
-        }
-      }, {});
-    case 'DUPLICATE_SELECTED_BUTTON_PRESSED':
-      return duplicateSelectedCirculations(state);
-    case 'CHANGE_ID_SELECTED_BUTTON_PRESSED':
-      return changeIdSelectedCirculations(state);
     case 'NUM_MARCHE_CELL_CLICKED':
       return produce(state, draftState => { draftState[action.id].numMarcheEdited = true; });
     case 'STOP_NUM_MARCHE_CELL_EDITION':
@@ -113,59 +61,9 @@ const circulationsById = (state = {}, action) => {
       return fanHeureDepart(state, action.start, action.secondsIncrement);
     case 'FAN_NUM_MARCHE_VALIDATED':
       return fanNumMarche(state, action.start, action.increment);
-    case 'SHIFT_DATE_VALIDATED':
-      return shiftDate(state, action.start, action.goal);
     default:
-      return state
+      return defaultObjectsById(state, action, circulationXmlTools, defaultCirculationObject);
   }
-}
-
-const omit = (keyToOmit, { [keyToOmit]: _, ...omittedPropObj } = {}) => omittedPropObj;
-
-const filterObject = (object, filterFunction) => {
-  let filtered = {};
-  Object.keys(object).forEach((key) => {
-    if (filterFunction(object[key])) {
-      filtered[key] = object[key];
-    }
-  })
-  return filtered;
-}
-
-const duplicateSelectedCirculations = (state) => {
-  return Object.keys(state).reduce((result, id) => {
-    if (state[id].selected) {
-      let newId = uuidv1();
-      return ({
-        ...result,
-        [id]: state[id],
-        [newId]: {
-          ...state[id],
-          id: newId,
-          selected: false
-        }
-      })
-    } else {
-      return ({ ...result, [id]: state[id] })
-    }
-  }, {});
-}
-
-const changeIdSelectedCirculations = (state) => {
-  return Object.keys(state).reduce((result, id) => {
-    if (state[id].selected) {
-      let newId = uuidv1();
-      return ({
-        ...result,
-        [newId]: {
-          ...state[id],
-          id: newId
-        }
-      })
-    } else {
-      return ({ ...result, [id]: state[id] })
-    }
-  }, {});
 }
 
 const fanHeureDepart = (state, start, secondsIncrement) => {
@@ -189,19 +87,6 @@ const fanNumMarche = (state, start, increment) => {
         currentId += increment;
       }
     })
-  });
-}
-
-const shiftDate = (state, start, goal) => {
-  const startDate = new Date(start);
-  const goalDate = new Date(goal);
-  const delta = goalDate - startDate;
-
-  return produce(state, draftState => {
-    Object.keys(draftState).forEach((id) => {
-      const origDate = new Date(circulationXmlTools.getHeureDepart(draftState[id]));
-      draftState[id] = circulationXmlTools.withHeureDepart(draftState[id], (new Date(origDate.getTime() + delta)));
-    });
   });
 }
 

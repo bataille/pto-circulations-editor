@@ -65,4 +65,8 @@ export class GenericXmlTools {
         return new Date(Date.now());
     }
 
+    withHeure = (element, date) => {
+        return element;
+    }
+
 }

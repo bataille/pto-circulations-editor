@@ -159,6 +159,14 @@ export class CirculationXmlTools extends GenericXmlTools {
     return Etapes[Etapes.length - 1].getElementsByTagName("pr")[0].getAttribute("id");
   }
 
+  withId = (element, id) => {
+    return ({
+        ...element,
+        id: id,
+    })
+  }
+
   getHeure = this.getHeureDepart;
+  withHeure = this.withHeureDepart;
 
 }
