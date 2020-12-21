@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container'
 
 import LoadButton from '../toolbar/LoadButton'
 import CirculationsTable from '../../circulationsComponents/CirculationsTable'
+import EnchainementsTable from '../../enchainementsComponents/EnchainementsTable'
 import PtxsTable from '../../ptxComponents/PtxsTable'
 
 class MainTable extends React.Component {
@@ -16,6 +17,8 @@ class MainTable extends React.Component {
                 return (<CirculationsTable />);
             case editedObject.PTX:
                 return (<PtxsTable />);
+            case editedObject.ENCHAINEMENTS:
+                return (<EnchainementsTable />);
             case editedObject.NONE:
             default:
                 return (

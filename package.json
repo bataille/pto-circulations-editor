@@ -1,6 +1,6 @@
 {
   "name": "pto-circulations-editor",
-  "version": "2.0",
+  "version": "2.0.0",
   "homepage": ".",
   "private": true,
   "dependencies": {
@@ -15,7 +15,8 @@
     "react-redux": "^7.2.0",
     "react-scripts": "^3.4.3",
     "redux": "^4.0.5",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "yarn": "^1.22.10"
   },
   "scripts": {
     "start": "react-scripts start",

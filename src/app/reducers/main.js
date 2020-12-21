@@ -6,6 +6,7 @@ let defaultState = {
         toLoadCount: 0,
         loadedCount: 0
     },
+    guidChanged: false,
     shiftDateModal: {
         shown: false,
     },
@@ -19,6 +20,8 @@ let defaultState = {
 
 const main = (state = defaultState, action) => {
     switch (action.type) {
+        case 'CHANGE_ID_SELECTED_BUTTON_PRESSED':
+            return produce(state, draftState => { draftState.guidChanged = true; });
         case 'FAN_HEURE_DEPART_BUTTON_CLICKED':
             return produce(state, draftState => { draftState.fanHeureDepartModal.shown = true; });
         case 'FAN_HEURE_DEPART_VALIDATED':

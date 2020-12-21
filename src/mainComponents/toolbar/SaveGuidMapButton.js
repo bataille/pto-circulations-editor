@@ -5,14 +5,15 @@ import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import Button from 'react-bootstrap/Button'
-import { Upload } from 'react-bootstrap-icons';
+import { FileCode } from 'react-bootstrap-icons';
 
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import { Check } from 'react-bootstrap-icons';
 
-import { editedObject, getEditedObjectXmlTools, getEditedObjectState } from '../../app/enums/editedObject'
-import { saveAsXmlFile } from '../../app/tools/saveFile'
+import { getEditedObjectState } from '../../app/enums/editedObject'
+import { buildGuidJsonMap } from '../../app/tools/buildGuidJsonMap'
+import { saveAsJsonFile } from '../../app/tools/saveFile'
 
 const dateStringForFileName = () => {
     let now = new Date();
@@ -28,23 +29,21 @@ const dateStringForFileName = () => {
     return result;
 }
 
-class SaveButton extends React.Component {
+class SaveGuidMapButton extends React.Component {
 
     constructor(props) {
         super(props);
-        this.fileName = dateStringForFileName() + "_element.xml";
+        this.fileName = dateStringForFileName() + "_correspondances_guid.json";
         this.handleValidate = this.handleValidate.bind(this);
     }
 
     getCurrentFileName() {
-        var fileType = this.props.editedObject;
-        return dateStringForFileName() + "_" + fileType + ".xml";
+        return dateStringForFileName() + "_correspondances_guid.json";
     }
 
     handleValidate() {
-        var xmlText = getEditedObjectXmlTools(this.props.editedObject)
-            .concatAllElementsAsXmlText(getEditedObjectState(this.props.state));
-        saveAsXmlFile(this.fileName, xmlText);
+        var jsonGuidMap = buildGuidJsonMap(getEditedObjectState(this.props.state));
+        saveAsJsonFile(this.fileName, JSON.stringify(jsonGuidMap));
     }
 
     render() {
@@ -55,7 +54,7 @@ class SaveButton extends React.Component {
                 trigger="click"
                 rootClose={true}
                 overlay={(props) => (
-                    <Popover id="save-name-popover" placement="bottom" {...props}>
+                    <Popover id="save-guidmap-name-popover" placement="bottom" {...props}>
                         <Popover.Title as="h3">Nom du fichier</Popover.Title>
                         <Popover.Content>
                             <InputGroup className={this.props.className} style={{ width: 300 }}>
@@ -79,11 +78,11 @@ class SaveButton extends React.Component {
                     </Popover>
                 )}
             >
-                <Button variant="success" className={this.props.className}
+                <Button variant="light" className={this.props.className}
                     onClick={() => { this.fileName = this.getCurrentFileName(); }}
-                    disabled={this.props.editedObject === editedObject.NONE}
+                    disabled={!this.props.guidChanged}
                 >
-                    <Upload />
+                    <FileCode />
                 </Button >
             </OverlayTrigger>
         );
@@ -93,9 +92,9 @@ class SaveButton extends React.Component {
 
 const mapStateToProps = state => {
     return ({
-        editedObject: state.editedObject,
+        guidChanged: state.main.guidChanged,
         state: state
     })
 }
 
-export default connect(mapStateToProps)(SaveButton)
+export default connect(mapStateToProps)(SaveGuidMapButton)

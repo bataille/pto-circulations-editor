@@ -4,6 +4,8 @@ import { v1 as uuidv1 } from 'uuid';
 export const defaultObject = {
   selected: false,
   extended: false,
+  id: undefined,
+  origineId: undefined
 }
 
 export const defaultObjectsById = (state = {}, action, xmlTools, defaultObject) => {
@@ -48,6 +50,7 @@ export const defaultObjectsById = (state = {}, action, xmlTools, defaultObject) 
               [newId]: {
                 ...state[id],
                 id: newId,
+                originedId: undefined,
                 selected: false
               }
             })

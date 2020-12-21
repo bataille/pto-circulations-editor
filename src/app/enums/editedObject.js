@@ -1,4 +1,4 @@
-import { circulationXmlTools, ptxXmlTools } from '../tools/xmlTools'
+import { circulationXmlTools, ptxXmlTools, enchainementXmlTools } from '../tools/xmlTools'
 
 export const editedObject = {
     NONE: 'none',
@@ -13,6 +13,8 @@ export const getEditedObjectXmlTools = (edited) => {
             return circulationXmlTools;
         case editedObject.PTX:
             return ptxXmlTools;
+        case editedObject.ENCHAINEMENTS:
+            return enchainementXmlTools;
         default:
             throw new Error('Edited object has no associated XML tools.');
     }
@@ -24,6 +26,8 @@ export const getEditedObjectState = (state) => {
             return state.circulationsById;
         case editedObject.PTX:
             return state.ptxsById;
+        case editedObject.ENCHAINEMENTS:
+            return state.enchainementsById;
         default:
             throw new Error('Edited object has no associated XML tools.');
     }

@@ -15,6 +15,7 @@ import ChangeIdButton from './ChangeIdButton'
 import ShiftDateButton from './ShiftDateButton'
 import ObjectSpecificToolbar from './ObjectSpecificToolbar'
 import CurrentlyEditedLabel from './CurrentlyEditedLabel'
+import SaveGuidMapButton from './SaveGuidMapButton';
 
 const Toolbar = (props) => (
     <Navbar bg="dark" sticky="top">
@@ -24,7 +25,10 @@ const Toolbar = (props) => (
             <DuplicateButton disabled={props.editedObject === editedObject.NONE} />
             <DeleteButton disabled={props.editedObject === editedObject.NONE} />
         </ButtonGroup>
-        <ChangeIdButton className="mr-2"disabled={props.editedObject === editedObject.NONE} />
+        <ButtonGroup className="mr-2">
+            <ChangeIdButton disabled={props.editedObject === editedObject.NONE} />
+            <SaveGuidMapButton />
+        </ButtonGroup>
 
         <ShiftDateButton className="mr-2" disabled={props.editedObject === editedObject.NONE } />
         <ObjectSpecificToolbar />

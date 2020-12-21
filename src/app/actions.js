@@ -164,3 +164,8 @@ export const changeDateHeureDebut = (id, heureDebut) => ({
   id: id,
   dateHeureDebut: heureDebut
 })
+
+export const applyGuidMapFile = (guidMapText) => ({
+  type: 'GUID_MAP_FILE_APPLIED',
+  guidMapText: guidMapText
+})

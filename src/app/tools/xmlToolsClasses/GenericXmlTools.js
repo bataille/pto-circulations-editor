@@ -28,6 +28,7 @@ export class GenericXmlTools {
             var currentId = this.getElementId(element);
             result[currentId] = {
                 id: currentId,
+                origineId: currentId,
                 content: element.outerHTML,
                 ...defaultObject
             }

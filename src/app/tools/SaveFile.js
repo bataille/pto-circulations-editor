@@ -1,13 +1,10 @@
 const config = require('../../config/config.json') 
 
-export const saveAsXmlFile = (fileName, content) => {
-    const header = config.xml_header;
-    const footer = config.xml_footer;
-
+const saveAsFile = (filename, content, dataType) => {
     var element = document.createElement('a');
     element.setAttribute('href',
-        'data:application/xml;charset=utf-8,' + encodeURIComponent(header + content + footer));
-    element.setAttribute('download', fileName);
+        dataType + ';charset=utf-8,' + encodeURIComponent(content));
+    element.setAttribute('download', filename);
 
     element.style.display = 'none';
     document.body.appendChild(element);
@@ -15,4 +12,15 @@ export const saveAsXmlFile = (fileName, content) => {
     element.click();
 
     document.body.removeChild(element);
+}
+
+export const saveAsXmlFile = (filename, content) => {
+    const header = config.xml_header;
+    const footer = config.xml_footer;
+
+    saveAsFile(filename, header + content + footer, 'data:application/xml');
+}
+
+export const saveAsJsonFile = (filename, content) => {
+    saveAsFile(filename, content, 'data:application/json');
 }

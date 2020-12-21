@@ -19,7 +19,8 @@ export class CirculationXmlTools extends GenericXmlTools {
               currentId = node.innerHTML;
               result[currentId] = {
                 ...defaultObject,
-                id: node.innerHTML,
+                id: currentId,
+                origineId: currentId,
               };
               break;
             case "dateCreation":
