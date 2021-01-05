@@ -33,5 +33,19 @@ export class PtxXmlTools extends GenericXmlTools {
 
   getHeure = this.getDateHeureDebut;
   withHeure = this.withDateHeureDebut;
-  
+
+  getNumeroPlance = (ptx) => {
+    let xmlDom = this.xmlParser.parseFromString(ptx.content, "application/xml");
+    return xmlDom.getElementsByTagName("numeroPlanche")[0].innerHTML;
+  }
+
+  withNumeroPlanche = (ptx, numeroPlanche) => {
+    let xmlDom = this.xmlParser.parseFromString(ptx.content, "application/xml");
+    xmlDom.getElementsByTagName("numeroPlanche")[0].innerHTML = numeroPlanche;
+    return ({
+      ...ptx,
+      content: this.xmlSerializer.serializeToString(xmlDom)
+    })
+  }
+
 }

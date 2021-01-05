@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { clickOnRow, dateHeureDebutCellClicked } from '../../app/actions'
+import { clickOnRow, dateHeureDebutCellClicked, numeroPlancheCellClicked } from '../../app/actions'
 
 import RowActions from '../../mainComponents/table/RowActions'
 import DateHeureDebutCellEditor from './DateHeureDebutCellEditor'
+import NumeroPlancheCellEditor from './NumeroPlancheCellEditor'
 import { ptxXmlTools } from '../../app/tools/xmlTools'
 
 class PtxRow extends React.Component {
@@ -13,6 +14,18 @@ class PtxRow extends React.Component {
             <tr className={this.props.selected ? "table-secondary" : ""}
                 onClick={() => { this.props.dispatch(clickOnRow(this.props.id)) }} >
                 <td>{this.props.id}</td>
+                <td>{
+                    this.props.numeroPlancheEdited
+                        ? <NumeroPlancheCellEditor
+                            id={this.props.id}
+                            numeroPlanche={this.props.numeroPlanche} />
+                        : <span onClick={(event) => {
+                            this.props.dispatch(numeroPlancheCellClicked(this.props.id));
+                            event.stopPropagation();
+                        }}>
+                            {this.props.numeroPlanche}
+                        </span>
+                }</td>                
                 <td>{this.props.ressourceInfraType}</td>
                 <td>{this.props.ressourceDescription}</td>
                 <td>{
@@ -42,6 +55,8 @@ const mapStateToProps = (state, ownProps) => {
         ressourceDescription: ptxXmlTools.getPtxRessourcesDescription(ptx),
         dateHeureDebut: ptxXmlTools.getDateHeureDebut(ptx),
         dateHeureDebutEdited: ptx.dateHeureDebutEdited,
+        numeroPlanche : ptxXmlTools.getNumeroPlance(ptx),
+        numeroPlancheEdited : ptx.numeroPlancheEdited
     }
 }
 

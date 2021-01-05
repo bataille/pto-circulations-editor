@@ -169,3 +169,19 @@ export const applyGuidMapFile = (guidMapText) => ({
   type: 'GUID_MAP_FILE_APPLIED',
   guidMapText: guidMapText
 })
+
+export const numeroPlancheCellClicked = (id) => ({
+  type: 'NUMERO_PLANCHE_CELL_CLICKED',
+  id: id
+})
+
+export const stopNumeroPlancheCellEdition = (id) => ({
+  type: 'STOP_NUMERO_PLANCHE_CELL_EDITION',
+  id: id
+})
+
+export const changeNumeroPlanche = (id, numeroPlanche) => ({
+  type: 'PTX_NUMERO_PLANCHE_CHANGED',
+  id: id,
+  numeroPlanche: numeroPlanche
+})

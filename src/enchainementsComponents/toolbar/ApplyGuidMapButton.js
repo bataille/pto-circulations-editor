@@ -35,7 +35,7 @@ class ApplyGuidMapButton extends React.Component {
             ref={(ref) => this.upload = ref}
             style={{ display: "none" }}
             onChange={this.onChangeFile.bind(this)} multiple />
-          Appliquer un fichier de correspondance
+          Appliquer un fichier de correspondances
           {this.props.buttonText}
         </Button >
       </OverlayTrigger>
