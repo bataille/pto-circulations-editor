@@ -12,60 +12,78 @@ export class CirculationXmlTools extends GenericXmlTools {
 
     Array.from(circulations).forEach((circulation) => {
       var currentId = 0;
+      // Initisialize circulation object
+      var currentCirculation = {
+        ...defaultObject,
+        id: currentId,
+        origineId: currentId,
+        dateCreation: "",
+        demandeur: "",
+        localisation: "",
+        parcours: "",
+        mission: "",
+        profilHoraire: "",
+        profilDeCirculation: "",
+        evenementsCirculation: "",
+        etatCirculation: "",
+        typeConvoi: [],
+        typeGestion: [],
+        renvoisStandards: "",
+        parcoursTopologique: "",
+      };
+      // Parse xml
       if (circulation.hasChildNodes) {
         circulation.childNodes.forEach((node) => {
           switch (node.tagName) {
             case "id":
               currentId = node.innerHTML;
-              result[currentId] = {
-                ...defaultObject,
-                id: currentId,
-                origineId: currentId,
-              };
+              currentCirculation.id = currentId;
+              currentCirculation.origineId = currentId;
               break;
             case "dateCreation":
-              result[currentId].dateCreation = node.innerHTML;
+              currentCirculation.dateCreation = node.innerHTML;
               break;
             case "demandeur":
-              result[currentId].demandeur = node.innerHTML;
+              currentCirculation.demandeur = node.innerHTML;
               break;
             case "localisation":
-              result[currentId].localisation = node.innerHTML;
+              currentCirculation.localisation = node.innerHTML;
               break;
             case "Parcours":
-              result[currentId].parcours = this.xmlSerializer.serializeToString(node);
+              currentCirculation.parcours = this.xmlSerializer.serializeToString(node);
               break;
             case "Mission":
-              result[currentId].mission = this.xmlSerializer.serializeToString(node);
+              currentCirculation.mission = this.xmlSerializer.serializeToString(node);
               break;
             case "ProfilHoraire":
-              result[currentId].profilHoraire = this.xmlSerializer.serializeToString(node);
+              currentCirculation.profilHoraire = this.xmlSerializer.serializeToString(node);
               break;
             case "ProfilDeCirculation":
-              result[currentId].profilDeCirculation = this.xmlSerializer.serializeToString(node);
+              currentCirculation.profilDeCirculation = this.xmlSerializer.serializeToString(node);
               break;
             case "evenementsCirculation":
-              result[currentId].evenementsCirculation = this.xmlSerializer.serializeToString(node);
+              currentCirculation.evenementsCirculation = this.xmlSerializer.serializeToString(node);
               break;
             case "EtatCirculation":
-              result[currentId].etatCirculation = this.xmlSerializer.serializeToString(node);
+              currentCirculation.etatCirculation = this.xmlSerializer.serializeToString(node);
               break;
             case "TypeConvoi":
-              result[currentId].typeConvoi = this.xmlSerializer.serializeToString(node);
+              currentCirculation.typeConvoi.push(this.xmlSerializer.serializeToString(node));
               break;
             case "TypeGestion":
-              result[currentId].typeGestion = this.xmlSerializer.serializeToString(node);
+              currentCirculation.typeGestion.push(this.xmlSerializer.serializeToString(node));
               break;
             case "renvoisStandards":
-              result[currentId].renvoisStandards = this.xmlSerializer.serializeToString(node);
+              currentCirculation.renvoisStandards = this.xmlSerializer.serializeToString(node);
               break;
             case "ParcoursTopologique":
-              result[currentId].parcoursTopologique = this.xmlSerializer.serializeToString(node);
+              currentCirculation.parcoursTopologique = this.xmlSerializer.serializeToString(node);
               break;
             default:
               return;
           }
-        })
+        });
+        result[currentId] = currentCirculation;
       }
     })
 
@@ -85,9 +103,9 @@ export class CirculationXmlTools extends GenericXmlTools {
     circulationsText += element.profilDeCirculation + "\n";
     circulationsText += element.evenementsCirculation + "\n";
     circulationsText += element.etatCirculation + "\n";
-    circulationsText += element.typeConvoi + "\n";
-    circulationsText += element.typeGestion + "\n";
-    circulationsText += element.renvoisStandards + "\n";
+    element.typeConvoi.forEach((typeConvoi) => { circulationsText += typeConvoi + "\n"; });
+    element.typeGestion.forEach((typeGestion) => { circulationsText += typeGestion + "\n"; });
+    circulationsText += (element.renvoisStandards !== "") ? (element.renvoisStandards + "\n") : "";
     circulationsText += element.parcoursTopologique + "\n";
 
     circulationsText += "</Circulation>\n";
@@ -162,8 +180,8 @@ export class CirculationXmlTools extends GenericXmlTools {
 
   withId = (element, id) => {
     return ({
-        ...element,
-        id: id,
+      ...element,
+      id: id,
     })
   }
 
